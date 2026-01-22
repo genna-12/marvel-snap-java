@@ -10,7 +10,7 @@ public class Deck {
     public void shuffle(){}
 
     public Card draw(){
-        return new Card();
+        return new BasicCard(0, "Default", 0, 0, "Default Card");
     }
 
 }
