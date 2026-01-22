@@ -1,10 +1,11 @@
 package com.marvelsnap.model;
 
-import java.util.List;
-import java.util.ArrayList;
+
+import java.util.Stack;
+
 
 public class Deck {
-    private List<Card> cards = new ArrayList<>();
+    private Stack<Card> cards = new Stack<>();
 
     public void shuffle(){}
 

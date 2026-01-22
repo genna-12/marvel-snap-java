@@ -7,7 +7,7 @@ public class Player {
 
     public void drawCard(){}
 
-    public void playCard(){}
+    public void playCard(Card c){}
 
     public void resetEnergy(int amount){}
 
