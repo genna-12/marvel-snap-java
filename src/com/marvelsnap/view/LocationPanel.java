@@ -9,7 +9,7 @@ public class LocationPanel extends JPanel {
     private JPanel p1CardsArea;
     private JPanel p2CardsArea;
 
-    public void setLocation(Location location) {
+    public void setLocation(Location loc) {
 
     }
 
