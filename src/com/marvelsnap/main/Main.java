@@ -1,7 +1,6 @@
 package com.marvelsnap.main;
 
 import javax.swing.SwingUtilities;
-
 import com.marvelsnap.controller.MainController;
 
 public class Main {
