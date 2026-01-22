@@ -6,7 +6,7 @@ import com.marvelsnap.model.GameObserver;
 import javax.swing.*;
 import java.awt.*;
 
-public class GamePanel extends JFrame implements GameObserver {
+public class GamePanel extends JPanel implements GameObserver {
     
     private IntermissionPanel intermissionPanel;
     private BoardPanel boardPanel;

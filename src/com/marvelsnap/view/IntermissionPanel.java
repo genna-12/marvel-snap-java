@@ -8,7 +8,7 @@ public class IntermissionPanel extends JPanel{
     private JButton btnReady;
 
     public IntermissionPanel(){
-        setLayout(new GridBagLayout());
+        setLayout(new BorderLayout());
         JLabel msg = new JLabel("Turno finito! Passa il computer all'altro giocatore.");
         msg.setFont(new Font("Arial", Font.BOLD, 20));
         
