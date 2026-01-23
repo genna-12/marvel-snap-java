@@ -1,9 +1,10 @@
 package com.marvelsnap.util;
 
-import com.marvelsnap.model.BasicCard;
-import com.marvelsnap.model.Card;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.marvelsnap.model.BasicCard;
+import com.marvelsnap.model.Card;
 
 public class CardFactory {
     public List<Card> createDeck(DeckType deckType) {

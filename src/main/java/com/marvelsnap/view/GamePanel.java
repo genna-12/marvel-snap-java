@@ -1,9 +1,11 @@
 package com.marvelsnap.view;
 
+import javax.swing.*;
+
 import com.marvelsnap.controller.GameController;
 import com.marvelsnap.model.Game;
 import com.marvelsnap.model.GameObserver;
-import javax.swing.*;
+
 import java.awt.*;
 
 public class GamePanel extends JPanel implements GameObserver {

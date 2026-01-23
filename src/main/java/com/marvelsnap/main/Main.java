@@ -1,11 +1,14 @@
 package com.marvelsnap.main;
 
-import javax.swing.SwingUtilities;
-
+import com.formdev.flatlaf.FlatDarkLaf;
 import com.marvelsnap.controller.MainController;
+
+import javax.swing.SwingUtilities;
 
 public class Main {
     public static void main(String[] args) {
+        FlatDarkLaf.setup();
+
         // usiamo invokeLater per progetto grande e sicurezza thread 
         SwingUtilities.invokeLater(() -> {
             try{
