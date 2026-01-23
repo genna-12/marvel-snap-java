@@ -11,10 +11,20 @@ public class Game {
     private Player[] players = new Player[2];
     private List<GameObserver> observers = new ArrayList<>();
 
+    public Game() {
+        this.turnManager = new TurnManager();
+        this.observers = new ArrayList<>();
+        this.locations = new ArrayList<>();
 
+        this.players = new Player[2];
+        this.players[0] = new Player();
+        this.players[1] = new Player();
+    }
 
     public void startGame(final String p1Name, final DeckType d1, final String p2Name, final DeckType d2) {
-        return;
+        //logica da implementare
+        
+        notifyObserver();
     }
 
     public boolean playCard(final Card card, final int locationIdx) {
@@ -30,10 +40,12 @@ public class Game {
     }
 
     public void addObserver(final GameObserver obs) {
-        return;
+        observers.add(obs);
     }
 
     private void notifyObserver() {
-        return;
+        for (GameObserver obs : observers) {
+            obs.onGameUpdated();
+        }
     }
 }
