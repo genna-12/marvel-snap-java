@@ -22,8 +22,8 @@ public class Game {
     }
 
     public void startGame(final String p1Name, final DeckType d1, final String p2Name, final DeckType d2) {
-        //logica da implementare
-        
+        // logica da implementare
+
         notifyObserver();
     }
 
@@ -47,5 +47,11 @@ public class Game {
         for (GameObserver obs : observers) {
             obs.onGameUpdated();
         }
+    }
+
+    // getters utili uml std non strict fate i get/set che ci servono
+
+    public List<Location> getLocations() {
+        return locations;
     }
 }
