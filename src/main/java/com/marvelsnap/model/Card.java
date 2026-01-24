@@ -41,4 +41,17 @@ public abstract class Card {
     public int getId() {
         return id;
     }
+
+    // Setters
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
+
+    public void addPower(int add) {
+        this.power += add;
+    }
 }
