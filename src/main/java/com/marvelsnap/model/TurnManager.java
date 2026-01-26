@@ -1,33 +1,52 @@
 package com.marvelsnap.model;
 
+import com.marvelsnap.util.Constants;
+
 public class TurnManager {
     private int currentTurn;
     private int currentPlayerIndex;
+    private boolean cycleComplete = false;
     private int maxTurns;
 
     public TurnManager() {
-        this.maxTurns = 6;
+        this.maxTurns = Constants.MAX_TURNS;
         this.currentTurn = 1;
         this.currentPlayerIndex = 0;
     }
 
     public int getEnergyForTurn() {
-        return currentTurn; // mi pare che n energia = n turno quindi ho gia messo return currentTurn ma controlla
+        return currentTurn;
     }
 
     public void nextTurn() {
-        return;
+        this.currentTurn++;
+        this.currentPlayerIndex = 0;
+        this.cycleComplete = false;
     }
 
     public void switchPlayer() {
-        return;
+        if(this.currentPlayerIndex == 0) {
+            this.currentPlayerIndex = 1;
+        } else {
+            cycleComplete = true;
+        }
     }
     
     public int getCurrentPlayerIndex() {
-        return 0;
+        return this.currentPlayerIndex;
+    }
+
+    /* Utility to get currentTurn number */
+    public int getTurnNumber() {
+        return this.currentTurn;
+    }
+
+    /*Utility to get maxTurns number */
+    public int getMaxTurns() {
+        return this.maxTurns;
     }
     
     public boolean isTurnCycleComplete() {
-        return false;
+        return this.cycleComplete;
     }
 }
