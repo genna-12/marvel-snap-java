@@ -96,4 +96,16 @@ public class Game {
     public List<Location> getLocations() {
         return locations;
     }
+
+    public TurnManager getTurnManager() {
+        return turnManager;
+    }
+
+    public Player getPlayer1() {
+        return players[0];
+    }
+
+    public Player getPlayer2() {
+        return players[1];
+    }
 }

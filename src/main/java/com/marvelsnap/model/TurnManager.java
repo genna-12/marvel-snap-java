@@ -15,7 +15,7 @@ public class TurnManager {
     }
 
     public int getEnergyForTurn() {
-        return currentTurn;
+        return this.currentTurn;
     }
 
     public void nextTurn() {
@@ -28,7 +28,7 @@ public class TurnManager {
         if(this.currentPlayerIndex == 0) {
             this.currentPlayerIndex = 1;
         } else {
-            cycleComplete = true;
+            this.cycleComplete = true;
         }
     }
     
@@ -45,8 +45,14 @@ public class TurnManager {
     public int getMaxTurns() {
         return this.maxTurns;
     }
+
+    public int getCurrentTurn() {
+        return this.currentTurn;
+    }
     
     public boolean isTurnCycleComplete() {
         return this.cycleComplete;
     }
+
 }
+

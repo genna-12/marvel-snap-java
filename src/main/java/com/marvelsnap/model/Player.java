@@ -25,7 +25,13 @@ public class Player {
 
     public void resetEnergy(int amount){}
 
+
+    // getters utili
     public Hand getHand(){
-        return new Hand();
+        return hand;
+    }
+
+    public Deck getDeck() {
+        return deck;
     }
 }

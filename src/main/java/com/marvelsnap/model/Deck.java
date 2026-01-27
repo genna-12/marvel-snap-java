@@ -12,6 +12,7 @@ public class Deck {
     public Deck(List<Card> deck) {
         this.cards = new Stack<>();
         this.cards.addAll(deck);
+        this.shuffle();
     }
 
     public void shuffle(){
@@ -22,5 +23,4 @@ public class Deck {
     public Card draw(){
         return new BasicCard(0, "Default", 0, 0, "Default Card");
     }
-
 }

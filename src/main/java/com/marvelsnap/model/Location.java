@@ -11,6 +11,7 @@ public abstract class Location {
     protected List<Card> cardsPlayer2;
     protected boolean revealed; //se la location è stata svelata è una varabile che logicamente potrebbe servire, l'aggiungo all'UML
 
+    // costruttore dummy
     public Location(String name, String description) {
         this.name = name;
         this.description = description;
