@@ -6,40 +6,81 @@ import java.util.List;
 import com.marvelsnap.util.*;
 
 public class Game {
-    private TurnManager turnManager = new TurnManager();
-    private List<Location> locations = new ArrayList<>();
-    private Player[] players = new Player[2];
-    private List<GameObserver> observers = new ArrayList<>();
+    private TurnManager turnManager;
+    private List<Location> locations;
+    private final Player[] players;
+    private final List<GameObserver> observers;
 
     public Game() {
-        this.turnManager = new TurnManager();
         this.observers = new ArrayList<>();
         this.locations = new ArrayList<>();
-
         this.players = new Player[2];
-        this.players[0] = new Player();
-        this.players[1] = new Player();
     }
 
     public void startGame(final String p1Name, final DeckType d1, final String p2Name, final DeckType d2) {
-        // logica da implementare
-        // devi usare CardFactory per creare i deck (work in progress)
-        // LocationFactory per creare le location (stub)
-        // in ogni caso usali
+        this.turnManager = new TurnManager();
+
+        /*Players inizialization */
+        final CardFactory cf = new CardFactory();
+        this.players[0] = new Player(p1Name, cf.createDeck(d1));
+        this.players[1] = new Player(p2Name, cf.createDeck(d2));
+
+        /*Locations inizialization */
+        final LocationFactory lf = new LocationFactory();
+        this.locations = lf.createLocations();
 
         notifyObserver();
     }
 
     public boolean playCard(final Card card, final int locationIdx) {
+        final Player currentPlayer = this.players[turnManager.getCurrentPlayerIndex()];
+        final Location targetLoc = this.locations.get(locationIdx);
+
+        if(card.isPlayable(turnManager.getEnergyForTurn()) && !targetLoc.isFull(turnManager.getCurrentPlayerIndex())) {
+            currentPlayer.playCard(card);
+            targetLoc.addCard(turnManager.getCurrentPlayerIndex(), card);
+            card.onReveal(this, targetLoc);
+            
+            notifyObserver();
+            return true;
+        }
+
         return false;
     }
 
     public void endTurn() {
-        return;
+        if(turnManager.isTurnCycleComplete()) {
+            for(final Location loc : this.locations) {
+                loc.applyEffect(this);
+            }
+            turnManager.nextTurn();
+
+            for(final Player player : this.players) {
+                player.drawCard();
+            }
+
+            /*Check endgame */
+            if(turnManager.getTurnNumber() > this.turnManager.getMaxTurns()) {
+                final Player winner = this.checkWinCondition();
+                for(final GameObserver obs : this.observers) {
+                    obs.onGameOver(null); /*Da rivedere -> inserire nella classe Player dei getter per i campi, 
+                                                        per favore  */
+                }
+                return;
+            }
+        } else {
+            turnManager.switchPlayer();
+        }
+
+        /*Notify observers */
+        for(final GameObserver obs : this.observers) {
+            obs.onTurnChanged(this.turnManager.getCurrentPlayerIndex());
+        }
+        notifyObserver();
     }
 
     public Player checkWinCondition() {
-        return new Player();
+        return WinCondition.determineWinner(locations, players[0], players[1]);
     }
 
     public void addObserver(final GameObserver obs) {
@@ -51,8 +92,6 @@ public class Game {
             obs.onGameUpdated();
         }
     }
-
-    // getters utili uml std non strict fate i get/set che ci servono
 
     public List<Location> getLocations() {
         return locations;
