@@ -19,11 +19,19 @@ public class Player {
     // costruttore vuoto per test
     public Player() {}
 
-    public void drawCard(){}
+    public void drawCard(){
+        if(deck.draw() != null){
+            hand.add(deck.draw());
+        }
+    }
 
-    public void playCard(Card c){}
+    public void playCard(Card c){
+        hand.remove(c);
+    }
 
-    public void resetEnergy(int amount){}
+    public void resetEnergy(int amount){
+        currentEnergy = amount;
+    }
 
 
     // getters utili
