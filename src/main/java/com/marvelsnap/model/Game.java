@@ -63,7 +63,7 @@ public class Game {
             if(turnManager.getTurnNumber() > this.turnManager.getMaxTurns()) {
                 final Player winner = this.checkWinCondition();
                 for(final GameObserver obs : this.observers) {
-                    obs.onGameOver(winner.getName()); 
+                    obs.onGameOver(winner.getName());
                 }
                 return;
             }
