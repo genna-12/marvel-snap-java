@@ -25,6 +25,16 @@ public class Game {
         this.players[0] = new Player(p1Name, cf.createDeck(d1));
         this.players[1] = new Player(p2Name, cf.createDeck(d2));
 
+        /*Hands initialization */
+        for(int i = 0; i < 3; i++) {
+            this.players[0].drawCard();
+            this.players[1].drawCard();
+        }
+
+        /*Energy initializations */
+        this.players[0].resetEnergy(1);
+        this.players[1].resetEnergy(1);
+
         /*Locations inizialization */
         final LocationFactory lf = new LocationFactory();
         this.locations = lf.createLocations();
@@ -49,18 +59,19 @@ public class Game {
     }
 
     public void endTurn() {
-        if(turnManager.isTurnCycleComplete()) {
+        if(this.turnManager.isTurnCycleComplete()) {
             for(final Location loc : this.locations) {
                 loc.applyEffect(this);
             }
-            turnManager.nextTurn();
+            this.turnManager.nextTurn();
 
             for(final Player player : this.players) {
                 player.drawCard();
+                player.resetEnergy(this.turnManager.getEnergyForTurn()); /*Reset Energy for next turn */
             }
 
             /*Check endgame */
-            if(turnManager.getTurnNumber() > this.turnManager.getMaxTurns()) {
+            if(this.turnManager.getTurnNumber() > this.turnManager.getMaxTurns()) {
                 final Player winner = this.checkWinCondition();
                 for(final GameObserver obs : this.observers) {
                     obs.onGameOver(winner.getName()); 
@@ -68,7 +79,7 @@ public class Game {
                 return;
             }
         } else {
-            turnManager.switchPlayer();
+            this.turnManager.switchPlayer();
         }
 
         /*Notify observers */
@@ -83,32 +94,32 @@ public class Game {
     }
 
     public void addObserver(final GameObserver obs) {
-        observers.add(obs);
+        this.observers.add(obs);
     }
 
     private void notifyObserver() {
-        for (GameObserver obs : observers) {
+        for (final GameObserver obs : observers) {
             obs.onGameUpdated();
         }
     }
 
     public List<Location> getLocations() {
-        return locations;
+        return this.locations;
     }
 
     public TurnManager getTurnManager() {
-        return turnManager;
+        return this.turnManager;
     }
 
     public Player getPlayer1() {
-        return players[0];
+        return this.players[0];
     }
 
     public Player getPlayer2() {
-        return players[1];
+        return this.players[1];
     }
 
-    public Player getPlayer(int index) {
-        return players[index];
+    public Player getPlayer(final int index) {
+        return this.players[index];
     }
 }

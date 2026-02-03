@@ -31,7 +31,7 @@ public class GameController implements GameObserver{
 
     public void onLocationClicked(final int locIdx) {
         /*Tries to play a card on a location */
-        if(this.inputState == InputState.CARD_SELECTED && selectedCard != null) {
+        if(this.inputState == InputState.CARD_SELECTED && this.selectedCard != null) {
             boolean success = game.playCard(selectedCard, locIdx);
 
             /*After the card is played, reset the selection */
@@ -45,12 +45,6 @@ public class GameController implements GameObserver{
     public void onEndTurnClicked() {
         if(this.inputState == InputState.IDLE || this.inputState == InputState.CARD_SELECTED) {
             game.endTurn();
-
-            /*Switch if Player 2 has to play */
-            if(!game.getTurnManager().isTurnCycleComplete()) {
-                this.inputState = InputState.WAITING_FOR_SWAP;
-                this.view.showIntermission();
-            }
         }
     }
 
@@ -59,6 +53,7 @@ public class GameController implements GameObserver{
         if(this.inputState == InputState.WAITING_FOR_SWAP) {
             this.inputState = InputState.IDLE;
             this.view.showBoard();
+            this.view.updateView(this.game);
         }
     }
 
@@ -66,7 +61,10 @@ public class GameController implements GameObserver{
 
     @Override
     public void onGameUpdated() {
-        this.view.updateView(this.game);
+        /*Modified in order to avoid to show for a bit player 2's hand */
+        if(this.inputState != InputState.WAITING_FOR_SWAP) {
+            this.view.updateView(this.game);
+        }
     }
 
     @Override
@@ -74,6 +72,10 @@ public class GameController implements GameObserver{
         this.selectedCard = null;
         if(this.game.getTurnManager().isTurnCycleComplete()) {
             this.inputState = InputState.IDLE;
+            this.view.updateView(this.game);
+        } else {
+            this.inputState = InputState.WAITING_FOR_SWAP;
+            this.view.showIntermission();
         }
     }
 
