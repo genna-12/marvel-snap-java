@@ -22,14 +22,12 @@ public class HandPanel extends JPanel {
 
     public void setHand(Hand hand) {
         //System.out.println(hand.getCards().size());
-
         for(Card card : hand.getCards()){
             cardPanels.add(new CardPanel());
             cardPanels.get(cardPanels.size() - 1).setCard(card);
 
             this.add(cardPanels.get(cardPanels.size() - 1));
         }
-        
         revalidate();
         repaint();
     }

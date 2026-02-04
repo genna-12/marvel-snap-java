@@ -20,8 +20,12 @@ public class Player {
     public Player() {}
 
     public void drawCard(){
-        if(deck.draw() != null){
-            hand.add(deck.draw());
+        
+        if(hand.getCards().size() < 7){
+            Card drawn = deck.draw();
+            if(drawn != null){
+                hand.add(drawn);
+            }
         }
     }
 
