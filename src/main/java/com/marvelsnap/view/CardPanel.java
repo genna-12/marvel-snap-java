@@ -4,6 +4,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -14,7 +15,7 @@ public class CardPanel extends JPanel {
     private boolean isSelected = false;
 
     public CardPanel(){
-        this.setSize(100, 200);
+        this.setPreferredSize(new Dimension(100, 200));
         this.setBackground(Color.WHITE);
         this.setLayout(new BorderLayout());
 
@@ -30,9 +31,9 @@ public class CardPanel extends JPanel {
         JLabel cardNameLabel = new JLabel();
         cardNameLabel.setText(card.getName());  
         JLabel cardCostLabel = new JLabel();
-        cardNameLabel.setText("COST = " + card.getCost());  
+        cardCostLabel.setText("COST = " + card.getCost());  
         JLabel cardPowerLabel = new JLabel();
-        cardNameLabel.setText("POWER = " + card.getPower());  
+        cardPowerLabel.setText("POWER = " + card.getPower());  
         this.add(cardNameLabel, BorderLayout.CENTER);
         this.add(cardCostLabel, BorderLayout.SOUTH);
         this.add(cardPowerLabel, BorderLayout.NORTH);
@@ -41,12 +42,14 @@ public class CardPanel extends JPanel {
     public void toggleSelection(){
         isSelected = !isSelected;
 
-        if(isSelected == false){
+        if(isSelected == true){
             this.setBackground(Color.GRAY);
         }
         else{
             this.setBackground(Color.WHITE);
         }
+
+        repaint();
         
     }
 }
