@@ -1,8 +1,26 @@
 package com.marvelsnap.controller;
 
+/**
+ * Enum to define the possible input states of the controller.
+ */
 public enum InputState {
-    IDLE, //nessuna azione
+    /**
+     * Default state.
+     */
+    IDLE,
+
+    /**
+     * Selected card state.
+     */
     CARD_SELECTED, 
-    WAITING_FOR_SWAP, //cambio turno
+
+    /**
+     * Turn change.
+     */
+    WAITING_FOR_SWAP,
+
+    /**
+     * The match is over.
+     */
     GAME_OVER
 }
