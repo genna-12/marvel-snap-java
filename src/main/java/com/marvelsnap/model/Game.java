@@ -31,7 +31,7 @@ public class Game {
             this.players[1].drawCard();
         }
 
-        /*Energy initializations */
+        /*Energy initialization */
         this.players[0].resetEnergy(1);
         this.players[1].resetEnergy(1);
 

@@ -77,7 +77,6 @@ public class Tests {
 
         @Override
         public void updateView(Game game) {
-            // Se la board è attiva, segnamo che l'update è avvenuto
             if (!intermissionCalled || boardCalled) {
                 updateCalledAfterReady = true;
             }
