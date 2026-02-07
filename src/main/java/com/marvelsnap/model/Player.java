@@ -1,6 +1,7 @@
 package com.marvelsnap.model;
 
 import java.util.List;
+import com.marvelsnap.util.Constants;
 
 public class Player {
     private String name;
@@ -16,14 +17,26 @@ public class Player {
         this.hand = new Hand();
     }
 
-    //costruttore vuoto per test
+    // costruttore vuoto per test
     public Player() {}
 
-    public void drawCard(){}
+    public void drawCard(){
+        
+        if(hand.getCards().size() < Constants.MAX_HAND_SIZE){
+            Card drawn = deck.draw();
+            if(drawn != null){
+                hand.add(drawn);
+            }
+        }
+    }
 
-    public void playCard(Card c){}
+    public void playCard(Card c){
+        hand.remove(c);
+    }
 
-    public void resetEnergy(int amount){}
+    public void resetEnergy(int amount){
+        currentEnergy = amount;
+    }
 
 
     // getters utili
