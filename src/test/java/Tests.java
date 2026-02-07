@@ -7,12 +7,19 @@ import com.marvelsnap.controller.GameController;
 import com.marvelsnap.model.Game;
 import com.marvelsnap.model.Player;
 import com.marvelsnap.model.WinCondition;
+
+/**
+ * Class for main tests.
+ */
 public class Tests {
     
     private Game game;
     private GameController controller;
     private TestGamePanel testView;
 
+    /**
+     * Setup method called before every test. 
+     */
     @BeforeEach
     void setUp() {
         game = new Game();
@@ -22,22 +29,24 @@ public class Tests {
         game.startGame("Player1", DeckType.AVENGERS, "Player2", DeckType.VILLAINS);
     }
 
-    /*Test Game & TurnManager*/
-
+    /** 
+     * Test Game & TurnManager. 
+     */
     @Test
     void testEnergyAndTurnFlow() {
         assertEquals(1, game.getTurnManager().getEnergyForTurn());
         assertEquals(1, game.getPlayer1().getCurrentEnergy());
 
-        game.endTurn(); // Switch a P2
-        game.endTurn();
+        game.endTurn(); /*P2 switch */
+        game.endTurn(); /*Next turn */
 
         assertEquals(2, game.getTurnManager().getTurnNumber());
-        assertEquals(2, game.getPlayer1().getCurrentEnergy(), "L'energia deve essere 2 al turno 2");
+        assertEquals(2, game.getPlayer1().getCurrentEnergy());
     }
 
-    /*Test InputState & View Interaction*/
-
+    /**
+     * Test InputState & View Interaction. It checks if controller tells the view to show the right panel.
+     */
     @Test
     void testIntermissionFlow() {
         
@@ -53,13 +62,18 @@ public class Tests {
         assertTrue(testView.updateCalledAfterReady);
     }
 
+    /**
+     * Test WinCondition tiebreaker management. Since the game just started, it should be a tie.
+     */
     @Test
     void testWinConditionTieBreaker() {
         Player winner = WinCondition.determineWinner(game.getLocations(), game.getPlayer1(), game.getPlayer2());
         assertNull(winner);
     }
     
-    /*Utility class for tests */
+    /**
+     * Utility class for tests. It simulates a GamePanel.
+     */
     private static class TestGamePanel extends GamePanel {
         boolean intermissionCalled = false;
         boolean boardCalled = false;
@@ -77,7 +91,6 @@ public class Tests {
 
         @Override
         public void updateView(Game game) {
-            // Se la board è attiva, segnamo che l'update è avvenuto
             if (!intermissionCalled || boardCalled) {
                 updateCalledAfterReady = true;
             }

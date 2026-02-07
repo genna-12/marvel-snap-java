@@ -2,7 +2,19 @@ package com.marvelsnap.model;
 
 import java.util.List;
 
+/**
+ * Utility class to determine the winner.
+ */
 public class WinCondition {
+    /**
+     * Static method to determine winner. It calculates the power on each location to count the locations won of each player.
+     * The player who won at least two locations, wins the game.
+     * If there's a tie, it calculates total power on all locations and checks it.
+     * @param locations the list of locations.
+     * @param p1 player 1.
+     * @param p2 player 2.
+     * @return the winner or null if we have absolute tie.
+     */
     public static Player determineWinner(final List<Location> locations, final Player p1, final Player p2) {
         int p1LocationsWon = 0;
         int p2LocationsWon = 0;
