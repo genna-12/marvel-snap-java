@@ -13,7 +13,7 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             try{
                 MainController controller = new MainController();
-                controller.startApp();
+                controller.startApp();                                                    
             } catch (Exception e){
                 e.printStackTrace();
             }
