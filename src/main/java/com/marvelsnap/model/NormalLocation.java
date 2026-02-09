@@ -1,19 +1,22 @@
 package com.marvelsnap.model;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class NormalLocation extends Location {
 
-    public NormalLocation() {
-        super("NormalLocation", "Tutte le carte qui guadagnano 1 di forza");
+    private int powerToAdd;
+
+    public NormalLocation(String name, String description, int powerToAdd) {
+        super(name, description);
+        this.powerToAdd = powerToAdd;
     }
 
     public void applyEffect(Game game) {
-        for (Card c : this.cardsPlayer1) {
-            c.addPower(1);
+        for (Card c : cardsPlayer1) {
+            c.addPower(powerToAdd);
         }
-        for (Card c : this.cardsPlayer2) {
-            c.addPower(1);
+        for (Card c : cardsPlayer2) {
+            c.addPower(powerToAdd);
         }
-    }
+    };
 }

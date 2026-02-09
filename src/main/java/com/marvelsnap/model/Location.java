@@ -61,19 +61,26 @@ public abstract class Location {
         return power;
     }
 
-    public void revealLocation() {
+    public void revealLocation(Game game) {
         this.revealed = true;
+        applyEffect(game);
     }
 
-    public abstract void applyEffect(Game game);
+    protected abstract void applyEffect(Game game);
 
     // Getters utili (spesso sottointesi nell'UML ma potrebbero servire)
     public String getName() {
-        return this.name;
+        if (isRevealed()) {
+            return this.name;
+        }
+        return "Void";
     }
 
     public String getDescription() {
-        return this.description;
+        if (isRevealed()) {
+            return this.description;
+        }
+        return "La location non è ancora stata rivelata";
     }
 
     public List<Card> getCards(int pIdx) {
