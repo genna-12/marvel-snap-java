@@ -5,8 +5,6 @@ import java.util.List;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
