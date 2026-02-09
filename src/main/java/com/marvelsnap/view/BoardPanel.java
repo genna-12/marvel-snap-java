@@ -7,7 +7,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import com.marvelsnap.model.Location;
-import javax.swing.border.Border;
 
 public class BoardPanel extends JPanel {
 
