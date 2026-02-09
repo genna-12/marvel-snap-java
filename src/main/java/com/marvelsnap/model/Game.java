@@ -67,7 +67,7 @@ public class Game {
         final Player currentPlayer = this.players[turnManager.getCurrentPlayerIndex()];
         final Location targetLoc = this.locations.get(locationIdx);
 
-        if(card.isPlayable(turnManager.getEnergyForTurn()) && !targetLoc.isFull(turnManager.getCurrentPlayerIndex())) {
+        if(currentPlayer.getCurrentEnergy() >= card.getCost() && !targetLoc.isFull(turnManager.getCurrentPlayerIndex())) {
             currentPlayer.playCard(card);
             targetLoc.addCard(turnManager.getCurrentPlayerIndex(), card);
             card.onReveal(this, targetLoc);

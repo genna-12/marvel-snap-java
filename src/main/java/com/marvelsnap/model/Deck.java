@@ -21,6 +21,10 @@ public class Deck {
     }
 
     public Card draw(){
-        return new BasicCard(0, "Default", 0, 0, "Default Card");
+        // return new BasicCard(0, "Default", 0, 0, "Default Card");
+        if(cards.isEmpty()){
+            return null;
+        }
+        return cards.pop();
     }
 }
