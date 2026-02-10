@@ -85,6 +85,8 @@ public class Game {
      * If only one player finished his turn, it switches to the other player.
      */
     public void endTurn() {
+
+        this.turnManager.registerMove(this.turnManager.getCurrentPlayerIndex());
         /*Both players finished the turn */
         if(this.turnManager.isTurnCycleComplete()) {
             for(final Location loc : this.locations) {

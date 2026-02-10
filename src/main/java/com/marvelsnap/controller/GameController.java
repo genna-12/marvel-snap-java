@@ -105,6 +105,7 @@ public class GameController implements GameObserver{
         this.selectedCard = null;
         if(this.game.getTurnManager().isTurnCycleComplete()) {
             this.inputState = InputState.IDLE;
+            this.view.showBoard();
             this.view.updateView(this.game);
         } else {
             this.inputState = InputState.WAITING_FOR_SWAP;

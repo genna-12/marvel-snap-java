@@ -9,9 +9,9 @@ import com.marvelsnap.util.Constants;
 public class TurnManager {
     private int currentTurn;
     private int currentPlayerIndex;
-    private boolean cycleComplete = false;
     private int maxTurns;
-
+    private boolean p1Played = false;
+    private boolean p2Played = false;
     /**
      * Class constructor.
      */
@@ -23,10 +23,11 @@ public class TurnManager {
 
     /**
      * Returns the energy of the current turn. It is the same as the turn number.
+     * 
      * @return Energy amount for the turn.
      */
     public int getEnergyForTurn() {
-        return this.currentTurn;
+        return Math.min(this.currentTurn, this.maxTurns);
     }
 
     /**
@@ -36,23 +37,23 @@ public class TurnManager {
     public void nextTurn() {
         this.currentTurn++;
         this.currentPlayerIndex = 0;
-        this.cycleComplete = false;
+        this.p1Played = false;
+        this.p2Played = false;
+        this.currentPlayerIndex = 0;
     }
 
     /**
      * Switched the player who should play.
-     * If player index was 0 (Player 1), it becomes 1 (Player 2). If player index was 1, the cycle is complete.
+     * If player index was 0 (Player 1), it becomes 1 (Player 2). If player index
+     * was 1, the cycle is complete.
      */
     public void switchPlayer() {
-        if(this.currentPlayerIndex == 0) {
-            this.currentPlayerIndex = 1;
-        } else {
-            this.cycleComplete = true;
-        }
+        this.currentPlayerIndex = (this.currentPlayerIndex == 0) ? 1 : 0;
     }
 
     /**
      * Gets the index of active player.
+     * 
      * @return the index of the current player.
      */
     public int getCurrentPlayerIndex() {
@@ -60,7 +61,8 @@ public class TurnManager {
     }
 
     /**
-     * Gets current turn number. 
+     * Gets current turn number.
+     * 
      * @return current turn number.
      */
     public int getTurnNumber() {
@@ -69,6 +71,7 @@ public class TurnManager {
 
     /**
      * Gets the number of maximum turns.
+     * 
      * @return max turn number.
      */
     public int getMaxTurns() {
@@ -77,19 +80,26 @@ public class TurnManager {
 
     /**
      * Gets the number of current turn.
+     * 
      * @return current turn number.
      */
     public int getCurrentTurn() {
         return this.currentTurn;
     }
-    
+
     /**
      * Says if both players finished their turn.
+     * 
      * @return if cycle is complete, e.g. both players finished the turn.
      */
     public boolean isTurnCycleComplete() {
-        return this.cycleComplete;
+        return p1Played && p2Played;
     }
 
+    public void registerMove(int playerIdx) {
+        if (playerIdx == 0)
+            p1Played = true;
+        else
+            p2Played = true;
+    }
 }
-
