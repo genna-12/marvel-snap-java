@@ -43,22 +43,29 @@ public class GamePanel extends JPanel implements GameObserver {
         add(activeGameContainer, "Board");
         add(intermissionPanel, "Intermission");
 
-        // debug
-        JButton btnDebugTurn = new JButton("[DEBUG] Simula Fine Turno");
-        btnDebugTurn.setBackground(Color.RED);
-        btnDebugTurn.setForeground(Color.WHITE);
+        cardLayout.show(this, "Board");
 
-        btnDebugTurn.addActionListener(e -> {
-            // Simulo che il Player 1 abbia finito e tocchi al Player 2
-            onTurnChanged(1); // 1 = Indice del Player 2
+        // fine turno
+        JButton btnEndTurn = new JButton("TERMINA TURNO");
+        btnEndTurn.setBackground(new Color(200, 50, 50)); // Rosso scuro
+        btnEndTurn.setForeground(Color.WHITE);
+        btnEndTurn.setFont(new Font("Arial", Font.BOLD, 14));
+        btnEndTurn.setFocusPainted(false);
+
+        btnEndTurn.addActionListener(e -> {
+            if (controller != null) {
+                controller.onEndTurnClicked(); 
+            }
         });
-
-        activeGameContainer.add(btnDebugTurn, BorderLayout.WEST);
+        activeGameContainer.add(btnEndTurn, BorderLayout.EAST);
     }
 
     // Aggiungere metodo all'UML
     public void setController(GameController controller) {
         this.controller = controller;
+        if (boardPanel != null) {
+            boardPanel.setController(controller); 
+        }
     }
 
     // Aggiungere metodo all'UML
@@ -125,7 +132,7 @@ public class GamePanel extends JPanel implements GameObserver {
             // Mostra SOLO la mano del giocatore corrente (aggiungo if per debug per evitare
             // nullpointer)
             if (currentPlayer != null && currentPlayer.getHand() != null) {
-                handPanel.setHand(currentPlayer.getHand());
+                handPanel.setHand(currentPlayer.getHand(), this.controller);
             }
         }
 
