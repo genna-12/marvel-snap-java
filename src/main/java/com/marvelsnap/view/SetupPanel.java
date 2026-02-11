@@ -107,4 +107,13 @@ public class SetupPanel extends JPanel{
     public DeckType getP2DeckType() {
         return (DeckType) cmbDeckP2.getSelectedItem();
     }
+
+    // metodi helper per i test
+    public void setP1Name(String name) {
+        this.txtP1Name.setText(name);
+    }
+
+    public void setP2Name(String name) {
+        this.txtP2Name.setText(name);
+    }
 }
