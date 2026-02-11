@@ -2,13 +2,24 @@ package com.marvelsnap.model;
 
 import java.util.List;
 
-import com.marvelsnap.view.BoardPanel;
+/**
+ * A common Location's implementation, which has the effect of reducing (or increasing)
+ * the cost of cards in each player hand, on the moment of its disclosure.
+ */
 
 public class ReducedCostLocation extends Location {
 
     private int costToReduce;
     private List<Integer> targetedCosts;
 
+    /**
+     * The class constructor.
+     * 
+     * @param name the location's name.
+     * @param description the description of the location's effect.
+     * @param costToReduce the amount of cost reduction (or increasement).
+     * @param targetedCosts the costs of the cards targeted by this effect.
+     */
     public ReducedCostLocation(String name, String description, int costToReduce, List<Integer> targetedCosts) {
         super(name, description);
         this.costToReduce = costToReduce;

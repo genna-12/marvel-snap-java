@@ -13,11 +13,9 @@ public class LocationPanel extends JPanel {
     private Location location;
     private JPanel p1CardsArea;
     private JPanel p2CardsArea;
-    // Probabilmente servirà infoLabel devo aggiungerla all'UML
     private JLabel infoLabel;
-    // Potrebbe anche servire per il controller un locationIndex
     private int locationIndex;
-    private JPanel infoArea; // ex locationarea l'ho rinominato per chiarezza
+    private JPanel infoArea;
     private JLabel p1PowerLabel;
     private JLabel p2PowerLabel;
     private GameController controller;
@@ -77,9 +75,6 @@ public class LocationPanel extends JPanel {
         this.p1PowerLabel.setText("P1: " + this.location.calculatePower(0));
         this.p2PowerLabel.setText("P2: " + this.location.calculatePower(1));
 
-        // non mi ricordo il tag ma se la descrizione è lunga va mandata a capo,
-        // aggiungi l'html per mandarlo a capo, cerca il tag da qualche parte ora non ho
-        // voglia
         this.infoLabel.setText("<html>" + "<font size = '5'> <b>" +
             this.location.getName() + "</b></font><br> " +
             this.location.getDescription() + "</html");
