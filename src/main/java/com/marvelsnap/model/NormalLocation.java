@@ -1,7 +1,5 @@
 package com.marvelsnap.model;
 
-import java.util.*;
-
 public class NormalLocation extends Location {
 
     public NormalLocation(String name, String description) {

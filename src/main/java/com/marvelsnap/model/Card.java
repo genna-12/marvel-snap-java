@@ -8,12 +8,13 @@ public abstract class Card {
     protected String description;
     protected String ability; 
 
-    public Card(int id, String name, int cost, int power, String description) {
+    public Card(int id, String name, int cost, int power, String description, String ability) {
         this.id = id;
         this.name = name;
         this.cost = cost;
         this.power = power;
         this.description = description;
+        this.ability = ability;
     }
 
     public abstract void onReveal(Game game, Location loc);
@@ -54,6 +55,7 @@ public abstract class Card {
 
     public void addPower(int add) {
         this.power += add;
+        System.out.println("[DEBUG MODEL] " + this.name + " forza cambiata a " + this.power);
     }
 
     public String getAbility() {
