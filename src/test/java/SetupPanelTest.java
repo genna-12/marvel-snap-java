@@ -1,7 +1,7 @@
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.marvelsnap.view.SetupPanel;
-import org.junit.jupiter.api.Test;
 
 public class SetupPanelTest {
 

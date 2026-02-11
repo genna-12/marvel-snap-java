@@ -1,9 +1,9 @@
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.marvelsnap.model.Card;
 import com.marvelsnap.util.CardFactory;
 import com.marvelsnap.util.DeckType;
-import org.junit.jupiter.api.Test;
 import java.util.List;
 
 public class CardFactoryTest {
