@@ -12,6 +12,7 @@ public class IntermissionPanel extends JPanel{
     public IntermissionPanel(){
         setLayout(new GridBagLayout());
         setBackground(new Color(20, 20, 20)); // Quasi nero
+        this.setOpaque(true);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(20, 20, 20, 20);

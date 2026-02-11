@@ -5,7 +5,7 @@ import java.util.*;
 public class NormalLocation extends Location {
 
     private int powerToAdd;
-    private List<Integer> targetedCosts; 
+    private List<Integer> targetedCosts;
 
     public NormalLocation(String name, String description, int powerToAdd, List<Integer> targetedCosts) {
         super(name, description);

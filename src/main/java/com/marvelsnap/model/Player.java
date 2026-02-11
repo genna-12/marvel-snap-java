@@ -15,10 +15,8 @@ public class Player {
         this.deck = new Deck(deck);
         this.deck.shuffle();
         this.hand = new Hand();
+        this.currentEnergy = 0;
     }
-
-    // costruttore vuoto per test
-    public Player() {}
 
     public void drawCard(){
         
@@ -31,11 +29,17 @@ public class Player {
     }
 
     public void playCard(Card c){
-        hand.remove(c);
+        if (hand.getCards().contains(c)) {
+            hand.remove(c);
+            //mancava questo calcolo dell'energia residua dopo aver giocato la carta
+            this.currentEnergy = this.currentEnergy - c.getCost();
+            //debug
+            System.out.println("[PLAYER] " + name + " gioca " + c.getName() + ". Energia residua: " + currentEnergy);
+        }
     }
 
     public void resetEnergy(int amount){
-        currentEnergy = amount;
+        this.currentEnergy = amount;
     }
 
 

@@ -11,11 +11,10 @@ public abstract class Location {
     protected List<Card> cardsPlayer2;
     protected boolean revealed; //se la location è stata svelata è una varabile che logicamente potrebbe servire, l'aggiungo all'UML
 
-    // costruttore dummy
     public Location(String name, String description) {
         this.name = name;
         this.description = description;
-        this.revealed = false; //dummy
+        this.revealed = false;
         this.cardsPlayer1 = new ArrayList<>();
         this.cardsPlayer2 = new ArrayList<>();
     }
@@ -70,17 +69,11 @@ public abstract class Location {
 
     // Getters utili (spesso sottointesi nell'UML ma potrebbero servire)
     public String getName() {
-        if (isRevealed()) {
-            return this.name;
-        }
-        return "Void";
+        return this.name;
     }
 
     public String getDescription() {
-        if (isRevealed()) {
-            return this.description;
-        }
-        return "La location non è ancora stata rivelata";
+        return this.description;
     }
 
     public List<Card> getCards(int pIdx) {

@@ -6,6 +6,7 @@ public abstract class Card {
     protected int cost;
     protected int power;
     protected String description;
+    protected String ability; 
 
     public Card(int id, String name, int cost, int power, String description) {
         this.id = id;
@@ -53,5 +54,23 @@ public abstract class Card {
 
     public void addPower(int add) {
         this.power += add;
+    }
+
+    public String getAbility() {
+        return this.ability; 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        // Due carte sono uguali se hanno lo stesso nome (e magari costo/potere)
+        return name.equals(card.name); 
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }
