@@ -3,6 +3,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.marvelsnap.util.DeckType;
 import com.marvelsnap.view.GamePanel;
+import com.marvelsnap.view.IntermissionPanel;
 import com.marvelsnap.controller.GameController;
 import com.marvelsnap.model.Game;
 import com.marvelsnap.model.Player;
@@ -22,26 +23,47 @@ public class Tests {
      */
     @BeforeEach
     void setUp() {
-        game = new Game();
-        testView = new TestGamePanel();
-        controller = new GameController(game, testView);
+        this.game = new Game();
+        this.testView = new TestGamePanel();
+        this.controller = new GameController(this.game, this.testView);
 
-        game.startGame("Player1", DeckType.AVENGERS, "Player2", DeckType.VILLAINS);
+        this.game.startGame("Player1", DeckType.AVENGERS, "Player2", DeckType.VILLAINS);
     }
 
     /** 
      * Test Game & TurnManager. 
      */
     @Test
+    void testSecondAndThirdLocationAreUnrevealed() {
+        assertEquals(true, this.game.getLocations().get(0).isRevealed());
+        assertEquals(false, this.game.getLocations().get(1).isRevealed());
+        assertEquals(false, this.game.getLocations().get(2).isRevealed());
+    }
+
+    @Test
     void testEnergyAndTurnFlow() {
-        assertEquals(1, game.getTurnManager().getEnergyForTurn());
-        assertEquals(1, game.getPlayer1().getCurrentEnergy());
+        /*First turn */
+        assertEquals(1, this.game.getTurnManager().getEnergyForTurn());
+        assertEquals(1, this.game.getPlayer1().getCurrentEnergy());
+        
+        assertEquals(true, this.game.getLocations().get(0).isRevealed());
 
         game.endTurn(); /*P2 switch */
         game.endTurn(); /*Next turn */
 
-        assertEquals(2, game.getTurnManager().getTurnNumber());
-        assertEquals(2, game.getPlayer1().getCurrentEnergy());
+        /*Second turn */
+        assertEquals(2, this.game.getTurnManager().getTurnNumber());
+        assertEquals(2, this.game.getPlayer1().getCurrentEnergy());
+
+        assertEquals(true, this.game.getLocations().get(1).isRevealed());
+
+        game.endTurn(); /*P2 switch */
+        game.endTurn(); /*End second turn */
+
+        assertEquals(3, this.game.getTurnManager().getCurrentTurn());
+        assertEquals(3, this.game.getPlayer1().getCurrentEnergy());
+
+        assertEquals(true, this.game.getLocations().get(2).isRevealed());
     }
 
     /**
@@ -49,16 +71,13 @@ public class Tests {
      */
     @Test
     void testIntermissionFlow() {
-        
-        controller.onEndTurnClicked();
+        this.controller.onEndTurnClicked();
+        assertTrue(this.testView.intermissionShown);
 
-        
-        assertTrue(testView.intermissionCalled);
+        this.controller.onIntermissionReadyClicked();
 
-        
-        controller.onIntermissionReadyClicked();
-
-        assertTrue(testView.boardCalled);
+        assertTrue(this.testView.boardShown);
+        assertFalse(this.game.isWaitingForSwap());
         assertTrue(testView.updateCalledAfterReady);
     }
 
@@ -75,25 +94,30 @@ public class Tests {
      * Utility class for tests. It simulates a GamePanel.
      */
     private static class TestGamePanel extends GamePanel {
-        boolean intermissionCalled = false;
-        boolean boardCalled = false;
-        boolean updateCalledAfterReady = false;
+        public boolean intermissionShown = false;
+        public boolean boardShown = false;
+        public boolean updateCalledAfterReady = false;
+        private IntermissionPanel testIntermission = new IntermissionPanel();
 
         @Override
         public void showIntermission() {
-            this.intermissionCalled = true;
+            this.intermissionShown = true;
         }
 
         @Override
         public void showBoard() {
-            this.boardCalled = true;
+            this.boardShown = true;
         }
 
         @Override
         public void updateView(Game game) {
-            if (!intermissionCalled || boardCalled) {
-                updateCalledAfterReady = true;
+            if(this.boardShown) {
+                this.updateCalledAfterReady = true;
             }
+        }
+
+        public IntermissionPanel getIntermissionPanel() {
+            return this.testIntermission;
         }
 
         @Override

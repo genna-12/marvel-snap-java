@@ -58,6 +58,8 @@ public class Game {
         LocationFactory lf = new LocationFactory();
         this.locations = lf.createLocations();
 
+        this.locations.get(0).revealLocation(this);
+
         notifyObserver();
     }
 
@@ -103,12 +105,15 @@ public class Game {
             System.out.println("[DEBUG] Fine Ciclo. Risoluzione turno.");
             this.waitingForSwap = false;
 
-            for (Location loc : this.locations) {
-                loc.applyEffect(this);
-            }
             this.turnManager.nextTurn();
 
-            for (Player player : this.players) {
+            if(this.turnManager.getCurrentTurn() == 2) {
+                this.locations.get(1).revealLocation(this);
+            } else if(this.turnManager.getCurrentTurn() == 3) {
+                this.locations.get(2).revealLocation(this);
+            }
+
+            for (final Player player : this.players) {
                 player.drawCard();
                 player.resetEnergy(this.turnManager.getEnergyForTurn()); /* Reset Energy for next turn */
             }
