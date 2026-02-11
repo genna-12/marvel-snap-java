@@ -4,19 +4,11 @@ import java.util.*;
 
 public class NormalLocation extends Location {
 
-    private int powerToAdd;
-
-    public NormalLocation(String name, String description, int powerToAdd) {
+    public NormalLocation(String name, String description) {
         super(name, description);
-        this.powerToAdd = powerToAdd;
     }
 
     public void applyEffect(Game game) {
-        for (Card c : cardsPlayer1) {
-            c.addPower(powerToAdd);
-        }
-        for (Card c : cardsPlayer2) {
-            c.addPower(powerToAdd);
-        }
-    };
+        //Lascialo vuoto fai override in locationfactory nelle location con effetti speciali
+    }
 }
