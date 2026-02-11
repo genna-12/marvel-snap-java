@@ -2,8 +2,6 @@ package com.marvelsnap.model;
 
 import java.util.List;
 
-import com.marvelsnap.view.BoardPanel;
-
 public class ReducedCostLocation extends Location {
 
     private int costToReduce;

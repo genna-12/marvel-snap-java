@@ -8,7 +8,6 @@ import com.marvelsnap.view.MainFrame;
 
 public class MainController {
     private MainFrame mainFrame;
-    private GameController gameController;
     private Game game;
 
     public MainController() {
