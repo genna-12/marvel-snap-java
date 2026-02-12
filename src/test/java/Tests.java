@@ -5,6 +5,7 @@ import com.marvelsnap.util.DeckType;
 import com.marvelsnap.view.GamePanel;
 import com.marvelsnap.view.IntermissionPanel;
 import com.marvelsnap.controller.GameController;
+import com.marvelsnap.model.Card;
 import com.marvelsnap.model.Game;
 import com.marvelsnap.model.Player;
 import com.marvelsnap.model.WinCondition;
@@ -64,6 +65,26 @@ public class Tests {
         assertEquals(3, this.game.getPlayer1().getCurrentEnergy());
 
         assertEquals(true, this.game.getLocations().get(2).isRevealed());
+    }
+    
+    @Test
+    void testCardRevealAfterTurnCycle() {
+        Card cardP1 = this.game.getPlayer1().getHand().getCards().getFirst();
+        this.game.playCard(cardP1, 0);
+
+        assertFalse(cardP1.isRevealed());
+
+        this.game.endTurn(); /*P1 ends turn */
+
+        Card cardP2 = this.game.getPlayer2().getHand().getCards().getFirst();
+        this.game.playCard(cardP2, 1);
+
+        assertFalse(cardP2.isRevealed());
+
+        this.game.endTurn(); /*P2 ends turn */
+
+        assertTrue(cardP1.isRevealed());
+        assertTrue(cardP2.isRevealed());
     }
 
     /**
