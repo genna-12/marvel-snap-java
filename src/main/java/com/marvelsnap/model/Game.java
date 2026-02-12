@@ -81,7 +81,7 @@ public class Game {
                 && !targetLoc.isFull(turnManager.getCurrentPlayerIndex())) {
             currentPlayer.playCard(card);
             targetLoc.addCard(turnManager.getCurrentPlayerIndex(), card);
-            card.onReveal(this, targetLoc);
+            card.setRevealed(false);
 
             System.out.println("[DEBUG] Giocata RIUSCITA. Energia residua: " + currentPlayer.getCurrentEnergy());
             notifyObserver();
@@ -104,6 +104,8 @@ public class Game {
         if (this.turnManager.isTurnCycleComplete()) {
             System.out.println("[DEBUG] Fine Ciclo. Risoluzione turno.");
             this.waitingForSwap = false;
+
+            this.revealPhase();
 
             this.turnManager.nextTurn();
 
@@ -134,6 +136,28 @@ public class Game {
 
         /* Notify observers */
         notifyObserver();
+    }
+
+    /**
+     * Helper method to reveal the cards when both players end the turn.
+     * First, it reveals the card played by player 1, then the ones played by player 2. 
+     */
+    private void revealPhase() {
+        for(final Location loc : this.locations) {
+            /*Let's reveal the card played by player 1 */
+            for(final Card c : loc.getCards(0)) {
+                if(!c.isRevealed()) {
+                    c.setRevealed(true);
+                }
+            }
+
+            /*Let's reveal the card played by player 2 */
+            for(final Card c : loc.getCards(1)) {
+                if(!c.isRevealed()) {
+                    c.setRevealed(true);
+                }
+            }
+        }
     }
 
     /**
