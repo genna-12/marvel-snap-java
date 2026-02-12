@@ -140,7 +140,7 @@ public class Game {
 
     /**
      * Helper method to reveal the cards when both players end the turn.
-     * First, it reveals the card played by player 1, then the ones played by player 2. 
+     * First, it reveals the cards played by player 1, then those played by player 2. 
      */
     private void revealPhase() {
         for(final Location loc : this.locations) {
@@ -148,6 +148,7 @@ public class Game {
             for(final Card c : loc.getCards(0)) {
                 if(!c.isRevealed()) {
                     c.setRevealed(true);
+                    c.onReveal(this, loc);
                 }
             }
 
@@ -155,6 +156,7 @@ public class Game {
             for(final Card c : loc.getCards(1)) {
                 if(!c.isRevealed()) {
                     c.setRevealed(true);
+                    c.onReveal(this, loc);
                 }
             }
         }
