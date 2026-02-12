@@ -16,7 +16,7 @@ public class LocationFactory {
         List<Location> locations = new ArrayList<>();
 
         locations = new ArrayList<>();
-        
+
         locations.add(new NormalLocation("Nidavellir", "Aggiunge +5 di forza alle carte presenti qui", 5, List.of(0, 1, 2, 3, 4, 5, 6)));
 
         locations.add(new NormalLocation("Necrosha", "Rimuove -2 di forza alle carte presenti qui", -2, List.of(0, 1, 2, 3, 4, 5, 6)));
@@ -133,6 +133,7 @@ public class LocationFactory {
         });
 
         Collections.shuffle(locations);
+        
         return new ArrayList<>(locations.subList(0, 3));
     }
 }
