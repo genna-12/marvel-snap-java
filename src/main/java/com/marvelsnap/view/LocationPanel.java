@@ -94,8 +94,11 @@ public class LocationPanel extends JPanel {
         this.p1PowerLabel.setText("P1: " + this.location.calculatePower(0));
         this.p2PowerLabel.setText("P2: " + this.location.calculatePower(1));
 
-        this.infoLabel.setText("<html>" + "<font size = '5'> <b>" +
-            this.location.getName() + "</b></font><br> " +
+        this.infoLabel.setText("<html>" +
+            "<div style = 'text-align: center;'>" + 
+            "<font size = '5'> <b>" + 
+            this.location.getName() + "</b>" +
+            "</div>" + "<br>" +
             this.location.getDescription() + "</html>");
                 
         int counter = 0;
