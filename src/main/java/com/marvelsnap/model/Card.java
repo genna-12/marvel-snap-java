@@ -12,6 +12,7 @@ public abstract class Card {
     protected int power;
     protected String description;
     protected String ability;
+    protected boolean revealed = false;
 
     /**
      * Constructor for the Card class.
@@ -78,6 +79,19 @@ public abstract class Card {
     /** @return the ability effect description */
     public String getAbility() {
         return this.ability;
+    }
+
+    /**
+     * Checks if the card's effect has been revealed (activated).
+     * @return true if the card's effect has been revealed, false otherwise
+     */
+    public boolean isRevealed() {
+        return revealed;
+    }
+
+    /** @param revealed the new revealed state to set */
+    public void setRevealed(boolean revealed) {
+        this.revealed = revealed;
     }
 
     /** @param cost the new energy cost to set */
