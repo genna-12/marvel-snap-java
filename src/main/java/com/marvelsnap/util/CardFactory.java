@@ -11,11 +11,20 @@ import com.marvelsnap.model.Game;
 import com.marvelsnap.model.GameObserver;
 import com.marvelsnap.model.Location;
 
-// sono un fenomeno l'idea ha funzionato
-
+/**
+ * Factory class used to create different decks based on the theme selected.
+ * It handles the creation of cards with their specific abilities and effects.
+ */
 public class CardFactory {
     private int id = 0;
 
+    /**
+     * Creates a list of cards based on the specified DeckType.
+     * Each deck contains a mix of Basic, Bonus, and Debuff cards.
+     * 
+     * @param type The theme of the deck (AVENGERS, VILLAINS, or XMEN)
+     * @return A list of Card objects representing the deck
+     */
     public List<Card> createDeck(DeckType type) {
         List<Card> deck = new ArrayList<>();
 
@@ -54,13 +63,13 @@ public class CardFactory {
                 deck.add(new BonusCard(7, "Rescue", 4, 4, "Armatura di Pepper.",
                         "On Reveal: +5 Forza se giochi una carta qui il prossimo turno.") {
 
-                    private boolean buffApplied = false; 
+                    private boolean buffApplied = false;
                     private int playedTurn;
-                    private int initialCardCount; 
+                    private int initialCardCount;
 
                     @Override
                     public void onReveal(Game game, Location loc) {
-                        this.playedTurn = game.getTurnManager().getCurrentTurn(); 
+                        this.playedTurn = game.getTurnManager().getCurrentTurn();
                         int myIdx = game.getTurnManager().getCurrentPlayerIndex();
 
                         this.initialCardCount = loc.getCards(myIdx).size();
@@ -74,13 +83,13 @@ public class CardFactory {
                                     return;
 
                                 int currentTurn = game.getTurnManager().getCurrentTurn();
-                                int currentIdx = game.getTurnManager().getCurrentPlayerIndex(); 
+                                int currentIdx = game.getTurnManager().getCurrentPlayerIndex();
 
                                 // controllo se sono nel turno successivo e se è il mio turno ovviamente
                                 if (currentTurn == playedTurn + 1 && currentIdx == myIdx) {
                                     // controllo se c'è una nuova carta
                                     if (loc.getCards(myIdx).size() > initialCardCount) {
-                                        addPower(5); 
+                                        addPower(5);
                                         buffApplied = true;
                                         System.out.println("Rescue: Supporto arrivato! Armatura potenziata (+5).");
                                     }
@@ -264,6 +273,11 @@ public class CardFactory {
         return deck;
     }
 
+    /**
+     * Generates a unique ID for each card.
+     * 
+     * @return the next available integer ID
+     */
     private int idGenerator() {
         return ++id;
     }

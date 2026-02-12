@@ -4,19 +4,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class IntermissionPanel extends JPanel{
+/**
+ * Screen that appears between turns to prevent players from seeing
+ * each other's hidden cards.
+ */
+public class IntermissionPanel extends JPanel {
     private JButton btnReady;
-    private JLabel infoLabel; // per mostrare il nome del prossimo giocatore lo aggiungo all'uml
+    private JLabel infoLabel;
 
-    // ricostruisco il pannello che il costruttore autogenerato non mi piaceva
-    public IntermissionPanel(){
+    /**
+     * Constructor for IntermissionPanel.
+     * Sets up the layout and UI warnings to prevent players from peaking during
+     * turn changes.
+     */
+    public IntermissionPanel() {
         setLayout(new GridBagLayout());
         setBackground(new Color(20, 20, 20)); // Quasi nero
         this.setOpaque(true);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(20, 20, 20, 20);
-        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
 
         JLabel stopIcon = new JLabel("STOP");
         stopIcon.setFont(new Font("Segoe UI Emoji", Font.BOLD, 60));
@@ -48,11 +57,19 @@ public class IntermissionPanel extends JPanel{
         add(btnReady, gbc);
     }
 
-    public void setReadyAction(ActionListener action){
+    /**
+     * Links the "I am ready" button to the controller action.
+     * 
+     * @param action the listener to trigger
+     */
+    public void setReadyAction(ActionListener action) {
         btnReady.addActionListener(action);
     }
 
-    // devvo aggiungerlo all'uml, è per cambiare il nome del giocatore
+    /**
+     * Screen that appears between turns to prevent players from seeing
+     * each other's hidden cards.
+     */
     public void setNextPlayerName(String name) {
         infoLabel.setText("È il turno di: " + name.toUpperCase());
     }
