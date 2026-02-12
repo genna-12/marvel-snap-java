@@ -4,11 +4,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class MenuPanel extends JPanel{
+/**
+ * The initial landing screen of the game.
+ * Provides options to start a new match or exit the application.
+ */
+public class MenuPanel extends JPanel {
     private JButton btnStart;
     private JButton btnExit;
 
-    public MenuPanel(){
+    /**
+     * Constructs the menu panel with a centered layout.
+     */
+    public MenuPanel() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -24,11 +31,21 @@ public class MenuPanel extends JPanel{
         add(btnExit, gbc);
     }
 
-    public void setStartAction(ActionListener action){
+    /**
+     * Assigns an action to the Start button.
+     * 
+     * @param action the listener to trigger when clicked
+     */
+    public void setStartAction(ActionListener action) {
         btnStart.addActionListener(action);
     }
 
-    public void setExitAction(ActionListener action){
+    /**
+     * Assigns an action to the Exit button.
+     * 
+     * @param action the listener to trigger when clicked
+     */
+    public void setExitAction(ActionListener action) {
         btnExit.addActionListener(action);
     }
 }

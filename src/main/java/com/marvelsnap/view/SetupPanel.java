@@ -7,17 +7,22 @@ import com.marvelsnap.util.DeckType;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class SetupPanel extends JPanel{
+/**
+ * Panel where players can enter their names and choose their decks.
+ * It uses a GridBagLayout for precise positioning of UI elements.
+ */
+public class SetupPanel extends JPanel {
     private JTextField txtP1Name;
     private JComboBox<DeckType> cmbDeckP1;
     private JTextField txtP2Name;
     private JComboBox<DeckType> cmbDeckP2;
     private JButton btnPlay;
 
+    /** Constructs the setup panel with all necessary input fields and buttons. */
     public SetupPanel() {
         // qui uso GridBag perché devo allineare tutto senza fare 200 panel
         setLayout(new GridBagLayout());
-        setBackground(new Color(30, 30, 60)); // blu
+        setBackground(new Color(30, 30, 60));
 
         // uso constraints per posizionare gli elementi
         GridBagConstraints gbc = new GridBagConstraints();
@@ -27,19 +32,23 @@ public class SetupPanel extends JPanel{
         JLabel title = new JLabel("CONFIGURAZIONE PARTITA");
         title.setFont(new Font("Impact", Font.BOLD, 30));
         title.setForeground(Color.ORANGE);
-        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         add(title, gbc);
 
         // primo giocatore
-        gbc.gridwidth = 1; gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        gbc.gridy = 1;
         add(createLabel("Nome Giocatore 1:"), gbc);
 
         gbc.gridx = 1;
         txtP1Name = new JTextField(20);
         add(txtP1Name, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
         add(createLabel("Mazzo P1:"), gbc);
 
         gbc.gridx = 1;
@@ -48,18 +57,22 @@ public class SetupPanel extends JPanel{
 
         // separatore
         JSeparator sep = new JSeparator();
-        gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
         add(sep, gbc);
 
-        // secondo giocatore analogo al primo 
-        gbc.gridwidth = 1; gbc.gridy = 4;
+        // secondo giocatore analogo al primo
+        gbc.gridwidth = 1;
+        gbc.gridy = 4;
         add(createLabel("Nome Giocatore 2:"), gbc);
 
         gbc.gridx = 1;
         txtP2Name = new JTextField(20);
         add(txtP2Name, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 5;
+        gbc.gridx = 0;
+        gbc.gridy = 5;
         add(createLabel("Mazzo P2:"), gbc);
 
         gbc.gridx = 1;
@@ -68,9 +81,11 @@ public class SetupPanel extends JPanel{
         add(cmbDeckP2, gbc);
 
         // starta partita
-        gbc.gridx = 0; gbc.gridy = 6; gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.gridwidth = 2;
         gbc.insets = new Insets(30, 10, 10, 10);
-        
+
         btnPlay = new JButton("INIZIA BATTAGLIA");
         btnPlay.setBackground(new Color(0, 150, 0)); // Verde
         btnPlay.setForeground(Color.WHITE);
@@ -79,7 +94,9 @@ public class SetupPanel extends JPanel{
         add(btnPlay, gbc);
     }
 
-    // serve per creare le etichette
+    /**
+     * Helper method to create styled labels for the setup form.
+     */
     private JLabel createLabel(String text) {
         JLabel l = new JLabel(text);
         l.setForeground(Color.WHITE);
@@ -87,32 +104,41 @@ public class SetupPanel extends JPanel{
         return l;
     }
 
-    public void setPlayAction(ActionListener action){
+    /**
+     * Links the game start button to the controller's validation logic.
+     * 
+     * @param action the listener for the start battle button
+     */
+    public void setPlayAction(ActionListener action) {
         btnPlay.addActionListener(action);
     }
 
-    // Getters
+    /** @return the text entered for Player 1's name */
     public String getP1Name() {
         return txtP1Name.getText();
     }
 
+    /** @return the selected DeckType for Player 1 */
     public DeckType getP1DeckType() {
         return (DeckType) cmbDeckP1.getSelectedItem();
     }
 
+    /** @return the text entered for Player 2's name */
     public String getP2Name() {
         return txtP2Name.getText();
     }
 
+    /** @return the selected DeckType for Player 2 */
     public DeckType getP2DeckType() {
         return (DeckType) cmbDeckP2.getSelectedItem();
     }
 
-    // metodi helper per i test
+    /** @param name the name to set for Player 1 */
     public void setP1Name(String name) {
         this.txtP1Name.setText(name);
     }
 
+    /** @param name the name to set for Player 2 */
     public void setP2Name(String name) {
         this.txtP2Name.setText(name);
     }
