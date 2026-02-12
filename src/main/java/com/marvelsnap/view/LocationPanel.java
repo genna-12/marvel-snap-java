@@ -7,6 +7,8 @@ import com.marvelsnap.model.Card;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.*;
+import java.util.List;
 
 public class LocationPanel extends JPanel {
 
@@ -19,6 +21,9 @@ public class LocationPanel extends JPanel {
     private JLabel p1PowerLabel;
     private JLabel p2PowerLabel;
     private GameController controller;
+    private List<JPanel> p1Cells;
+    private List<JPanel> p2Cells;
+    
 
     public LocationPanel(int locIndex) {
         this.locationIndex = locIndex;
@@ -28,10 +33,24 @@ public class LocationPanel extends JPanel {
         this.p1CardsArea = new JPanel(new GridLayout(2, 2));
         this.p1CardsArea.setBackground(new Color(40, 40, 40)); // l ho messo grigio scuro che mi sembra piu carino
         this.p1CardsArea.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), "Player 1"));
+        this.p1Cells = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            JPanel cell = new JPanel(new BorderLayout());
+            cell.setOpaque(false);
+            this.p1Cells.add(cell);
+            this.p1CardsArea.add(cell);
+        }
 
         this.p2CardsArea = new JPanel(new GridLayout(2, 2));
         this.p2CardsArea.setBackground(new Color(40, 40, 40));
         this.p2CardsArea.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), "Player 2"));
+        this.p2Cells = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            JPanel cell = new JPanel(new BorderLayout());
+            cell.setOpaque(false);
+            this.p2Cells.add(cell);
+            this.p2CardsArea.add(cell);
+        }
 
         this.infoArea = new JPanel(new BorderLayout());
         this.infoArea.setBackground(new Color(20, 20, 50));
@@ -77,21 +96,28 @@ public class LocationPanel extends JPanel {
 
         this.infoLabel.setText("<html>" + "<font size = '5'> <b>" +
             this.location.getName() + "</b></font><br> " +
-            this.location.getDescription() + "</html");
+            this.location.getDescription() + "</html>");
                 
-
-        this.p1CardsArea.removeAll();
+        int counter = 0;
+        for (int i = 0; i < 4; i++) {
+            this.p1Cells.get(i).removeAll();
+        }
         for (Card c : this.location.getCards(0)) {
             CardPanel newCard = new CardPanel();
             newCard.setCard(c);
-            this.p1CardsArea.add(newCard);
+            this.p1Cells.get(counter).add(newCard);
+            counter++;
         }
 
-        this.p2CardsArea.removeAll();
+        counter = 0;
+        for (int i = 0; i < 4; i++) {
+            this.p2Cells.get(i).removeAll();
+        }
         for (Card c : this.location.getCards(1)) {
             CardPanel newCard = new CardPanel();
             newCard.setCard(c);
-            this.p2CardsArea.add(newCard);
+            this.p2Cells.get(counter).add(newCard);
+            counter++;
         }
     }
 

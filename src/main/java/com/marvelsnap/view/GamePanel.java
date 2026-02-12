@@ -118,7 +118,7 @@ public class GamePanel extends JPanel implements GameObserver {
 
         // aggiorno
         // infopanel
-        lblTurnInfo.setText("TURNO " + turn + "/" + Constants.MAX_TURNS);
+        lblTurnInfo.setText("TURNO " + turn + "/" + game.getTurnManager().getMaxTurns()); // in caso esca la location Limbo
         lblPlayerName.setText(name.toUpperCase());
         lblEnergyInfo.setText("ENERGIA: " + energy);
         // boardpanel
@@ -202,10 +202,6 @@ public class GamePanel extends JPanel implements GameObserver {
         return intermissionPanel;
     }
 
-<<<<<<< HEAD
-    public BoardPanel getBoardPanel() {
-        return this.boardPanel;
-=======
     // resetta tutta la schermata, ho aggiunto helper in locationpanel e boardpanel
     public void resetView() {
         this.p1Name = "Player 1";
@@ -229,6 +225,5 @@ public class GamePanel extends JPanel implements GameObserver {
 
         revalidate();
         repaint();
->>>>>>> main
     }
 }

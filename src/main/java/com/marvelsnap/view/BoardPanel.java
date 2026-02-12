@@ -28,7 +28,9 @@ public class BoardPanel extends JPanel {
     }
 
     public void refresh(List<Location> locations) {
-        if(locations == null || locations.size() < 3) return;
+        if (locations == null || locations.size() < 3) {
+            return;
+        }
         for (int i = 0; i < 3; i++) {
             this.locationPanels.get(i).setLocation(locations.get(i));
             this.locationPanels.get(i).refresh();

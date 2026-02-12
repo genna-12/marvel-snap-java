@@ -2,14 +2,11 @@ package com.marvelsnap.model;
 
 import java.util.List;
 
-<<<<<<< HEAD
 /**
  * A common Location's implementation, which has the effect of reducing (or increasing)
  * the cost of cards in each player hand, on the moment of its disclosure.
  */
 
-=======
->>>>>>> main
 public class ReducedCostLocation extends Location {
 
     private int costToReduce;

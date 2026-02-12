@@ -107,15 +107,15 @@ public class Game {
 
             this.turnManager.nextTurn();
 
+            for (final Player player : this.players) {
+                player.drawCard();
+                player.resetEnergy(this.turnManager.getEnergyForTurn()); /* Reset Energy for next turn */
+            }
+
             if(this.turnManager.getCurrentTurn() == 2) {
                 this.locations.get(1).revealLocation(this);
             } else if(this.turnManager.getCurrentTurn() == 3) {
                 this.locations.get(2).revealLocation(this);
-            }
-
-            for (final Player player : this.players) {
-                player.drawCard();
-                player.resetEnergy(this.turnManager.getEnergyForTurn()); /* Reset Energy for next turn */
             }
 
             /* Check endgame */

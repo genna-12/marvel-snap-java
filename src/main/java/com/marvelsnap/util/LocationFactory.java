@@ -52,22 +52,51 @@ public class LocationFactory {
                 this.capacity = 0;
             }
         });
-
-        locations.add(new Location("Progetto Pegasus", "+5 energia durante questo turno") {
+        
+        locations.add(new Location("Limbo", "In questa partita ci sono 7 turni") {
             @Override
             protected void applyEffect(Game game) {
-                game.getPlayer1().resetEnergy(game.getPlayer1().getCurrentEnergy() + 5);
-                game.getPlayer2().resetEnergy(game.getPlayer2().getCurrentEnergy() + 5);
+                game.getTurnManager().setMaxTurns(7);
             }
         });
 
-        locations.add(new Location("Officina del Riparatore", "+1 energia durante questo turno") {
+        locations.add(new Location("Il Mondo Assassino", "All'inizio del quarto turno le carte presenti qui vengono distrutte") {
             @Override
             protected void applyEffect(Game game) {
-                game.getPlayer1().resetEnergy(game.getPlayer1().getCurrentEnergy() + 1);
-                game.getPlayer2().resetEnergy(game.getPlayer2().getCurrentEnergy() + 1);
-            }
+                
+                GameObserver locationObserver = new GameObserver() {
+                    private boolean effectCompleted = false;
+
+                    @Override
+                    public void onGameOver(String winnerName) {
+                    }
+
+                    @Override
+                    public void onGameUpdated() {
+                        if (game.getTurnManager().getCurrentTurn() == 4 && !this.effectCompleted) {
+                            cardsPlayer1.removeAll(cardsPlayer1);
+                            cardsPlayer2.removeAll(cardsPlayer2);
+                            this.effectCompleted = true;
+                        }
+                    }
+
+                    @Override 
+                    public void onTurnChanged(int playerIndex) { 
+                    }
+                };
+                game.addObserver(locationObserver);
+                }
         });
+                
+        locations.add(new Location("Castello di Zemo", "Scambia di lato le carte posizionate qui") {
+            @Override
+            protected void applyEffect(Game game) {
+                List<Card> temp = List.copyOf(this.cardsPlayer1);
+                this.cardsPlayer1.removeAll(this.cardsPlayer1);
+                this.cardsPlayer1.addAll(this.cardsPlayer2);
+                this.cardsPlayer2 = new ArrayList<>(temp);
+            }
+        }); 
 
         locations.add(new Location("Nova Roma", "Pesca una carta") {
             @Override
@@ -87,47 +116,19 @@ public class LocationFactory {
             }
         });
 
-        locations.add(new Location("Limbo", "In questa partita ci sono 7 turni") {
+        locations.add(new Location("Officina del Riparatore", "+1 energia durante questo turno") {
             @Override
             protected void applyEffect(Game game) {
-                game.getTurnManager().setMaxTurns(7);
+                game.getPlayer1().resetEnergy(game.getPlayer1().getCurrentEnergy() + 1);
+                game.getPlayer2().resetEnergy(game.getPlayer2().getCurrentEnergy() + 1);
             }
         });
 
-        locations.add(new Location("Castello di Zemo", "Scambia di lato le carte posizionate qui") {
+        locations.add(new Location("Progetto Pegasus", "+5 energia durante questo turno") {
             @Override
             protected void applyEffect(Game game) {
-                List<Card> temp = new ArrayList<>(this.cardsPlayer1);
-                this.cardsPlayer1 = this.cardsPlayer2;
-                this.cardsPlayer2 = temp;
-            }
-        });
-
-        locations.add(new Location("Il Mondo Assassino", "All'inizio del quarto turno le carte presenti qui vengono distrutte") {
-            @Override
-            protected void applyEffect(Game game) {
-                
-                GameObserver locationObserver = new GameObserver() {
-                    private boolean effectCompleted = false;
-
-                    @Override
-                    public void onGameOver(String winnerName) {
-                    }
-
-                    @Override
-                    public void onGameUpdated() {
-                    }
-
-                    @Override 
-                    public void onTurnChanged(int playerIndex) {
-                        if (game.getTurnManager().getCurrentTurn() == 4 && !this.effectCompleted) {
-                            cardsPlayer1 = new ArrayList<>();
-                            cardsPlayer2 = new ArrayList<>();
-                            this.effectCompleted = true;
-                        }
-                    }
-                };
-                game.addObserver(locationObserver);
+                game.getPlayer1().resetEnergy(game.getPlayer1().getCurrentEnergy() + 5);
+                game.getPlayer2().resetEnergy(game.getPlayer2().getCurrentEnergy() + 5);
             }
         });
 

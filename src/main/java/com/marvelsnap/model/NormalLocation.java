@@ -1,14 +1,11 @@
 package com.marvelsnap.model;
 
-<<<<<<< HEAD
 import java.util.*;
 
 /**
  * A common Location's implementation, which has the effect of adding (or subtracting)
  * power to cards that are already placed on it, on the moment of its disclosure. 
  */
-=======
->>>>>>> main
 public class NormalLocation extends Location {
 
     private int powerToAdd;
