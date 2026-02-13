@@ -9,6 +9,11 @@ import com.marvelsnap.model.Card;
 import com.marvelsnap.model.Game;
 import com.marvelsnap.model.Player;
 import com.marvelsnap.model.WinCondition;
+import com.marvelsnap.model.Location;
+import com.marvelsnap.model.NormalLocation;
+import com.marvelsnap.model.ReducedCostLocation;
+import java.util.*;
+import com.marvelsnap.model.BasicCard;
 
 /**
  * Class for main tests.
@@ -146,4 +151,52 @@ public class Tests {
             return 0; 
         }
     }
+
+
+    @Test
+    void testNormalLocationProperties() {
+        Location normalLocation = new NormalLocation("Nome", "Descrizione", 10, List.of(0, 1, 2, 3, 4, 5, 6));
+
+        assertEquals("", normalLocation.getName());
+        assertEquals("Questa location non è stata ancora rivelata", normalLocation.getDescription());
+        assertFalse(normalLocation.isRevealed());
+        assertEquals(new ArrayList<Card>(), normalLocation.getCards(0));
+        assertEquals(0, normalLocation.calculatePower(0));
+        assertFalse(normalLocation.isFull(0));
+
+        normalLocation.addCard(0, new BasicCard(1, "TestCard", 1, 0, "TestDescription", "Nessuna"));
+        assertEquals(1, normalLocation.getCards(0).size());
+
+        normalLocation.revealLocation(this.game);
+        assertTrue(normalLocation.isRevealed());
+        assertEquals("Nome", normalLocation.getName());
+        assertEquals("Descrizione", normalLocation.getDescription());
+        assertEquals(10, normalLocation.getCards(0).getFirst().getPower());
+        for (int i = 0; i < 3; i++) {
+            normalLocation.addCard(0, new BasicCard(1, "TestCard", 1, 0, "TestDescription", "Nessuna"));
+        }
+        assertTrue(normalLocation.isFull(0));
+    }
+    
+    @Test
+    void testReducedCostLocationProperties() {
+        Location reducedCostLocation = new ReducedCostLocation("Name", "Description", 1, List.of(1));
+        this.game.getPlayer1().getHand().add(new BasicCard(2, "TestCard", 1, 0, "TestDescription", "Nessuna"));
+        this.game.getPlayer1().getHand().add(new BasicCard(3, "TestCard", 6, 0, "TestDescription", "Nessuna"));
+
+        reducedCostLocation.revealLocation(this.game);
+
+        int handSize = this.game.getPlayer1().getHand().getCards().size();
+        assertEquals(0, this.game.getPlayer1().getHand().getCards().get(handSize - 2).getCost()); // verifica che la riduzione di costo sia avvenuta
+        assertEquals(6, this.game.getPlayer1().getHand().getCards().get(handSize - 1).getCost()); // verifica che la modifica di costo non riguardi
+        // la carta di costo 6, ma solo quella di costo 1
+    }
+
+    @Test
+    void testLocationFactory() {
+        List<Location> locations = new ArrayList<>();
+        
+    }
 }
+
+

@@ -88,9 +88,10 @@ public class LocationPanel extends JPanel {
     }
 
     public void refresh(int viewerIdx) {
-        if (this.location == null)
+        if (this.location == null) {
             return;
-
+        }
+        
         this.p1PowerLabel.setText("P1: " + this.location.calculatePower(0));
         this.p2PowerLabel.setText("P2: " + this.location.calculatePower(1));
 
