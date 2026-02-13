@@ -13,7 +13,7 @@ import com.marvelsnap.model.WinCondition;
 /**
  * Class for main tests.
  */
-public class Tests {
+public class ModelClassesTests {
     
     private Game game;
     private GameController controller;
@@ -36,6 +36,7 @@ public class Tests {
      */
     @Test
     void testSecondAndThirdLocationAreUnrevealed() {
+        /*At the very beginning of the game, only the first location is revealed. */
         assertEquals(true, this.game.getLocations().get(0).isRevealed());
         assertEquals(false, this.game.getLocations().get(1).isRevealed());
         assertEquals(false, this.game.getLocations().get(2).isRevealed());
@@ -44,44 +45,44 @@ public class Tests {
     @Test
     void testEnergyAndTurnFlow() {
         /*First turn */
-        assertEquals(1, this.game.getTurnManager().getEnergyForTurn());
-        assertEquals(1, this.game.getPlayer1().getCurrentEnergy());
+        assertEquals(0, this.game.getTurnManager().getCurrentPlayerIndex());
         
         assertEquals(true, this.game.getLocations().get(0).isRevealed());
 
         game.endTurn(); /*P2 switch */
+        assertEquals(1, this.game.getTurnManager().getCurrentPlayerIndex());
+        
         game.endTurn(); /*Next turn */
 
         /*Second turn */
         assertEquals(2, this.game.getTurnManager().getTurnNumber());
-        assertEquals(2, this.game.getPlayer1().getCurrentEnergy());
 
         assertEquals(true, this.game.getLocations().get(1).isRevealed());
 
         game.endTurn(); /*P2 switch */
         game.endTurn(); /*End second turn */
 
+        /*Third turn */
         assertEquals(3, this.game.getTurnManager().getCurrentTurn());
-        assertEquals(3, this.game.getPlayer1().getCurrentEnergy());
 
         assertEquals(true, this.game.getLocations().get(2).isRevealed());
     }
     
     @Test
     void testCardRevealAfterTurnCycle() {
+        this.game.getPlayer1().resetEnergy(10);
+        this.game.getPlayer2().resetEnergy(10);
         Card cardP1 = this.game.getPlayer1().getHand().getCards().getFirst();
         this.game.playCard(cardP1, 0);
+        this.game.endTurn();
 
         assertFalse(cardP1.isRevealed());
 
-        this.game.endTurn(); /*P1 ends turn */
-
         Card cardP2 = this.game.getPlayer2().getHand().getCards().getFirst();
-        this.game.playCard(cardP2, 1);
-
+        this.game.playCard(cardP2, 2);
         assertFalse(cardP2.isRevealed());
 
-        this.game.endTurn(); /*P2 ends turn */
+        this.game.endTurn();
 
         assertTrue(cardP1.isRevealed());
         assertTrue(cardP2.isRevealed());

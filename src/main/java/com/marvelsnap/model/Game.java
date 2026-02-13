@@ -15,7 +15,7 @@ public class Game {
     private final Player[] players;
     private final List<GameObserver> observers;
 
-    // flag utility
+    /*Utility flag */
     private boolean waitingForSwap = false;
 
     /**
@@ -55,9 +55,10 @@ public class Game {
         this.players[1].resetEnergy(1);
 
         /* Locations inizialization */
-        LocationFactory lf = new LocationFactory();
+        final LocationFactory lf = new LocationFactory();
         this.locations = lf.createLocations();
 
+        /*First location is revealed at the beginning of the game */
         this.locations.get(0).revealLocation(this);
 
         notifyObserver();
@@ -73,21 +74,19 @@ public class Game {
      * @return true if the card is played, false otherwise.
      */
     public boolean playCard(final Card card, final int locationIdx) {
-        Player currentPlayer = this.players[turnManager.getCurrentPlayerIndex()];
-        Location targetLoc = this.locations.get(locationIdx);
+        final Player currentPlayer = this.players[this.turnManager.getCurrentPlayerIndex()];
+        final Location targetLoc = this.locations.get(locationIdx);
 
-        System.out.println("[DEBUG] Tentativo giocata: " + card.getName() + " su Loc " + locationIdx);
         if (currentPlayer.getCurrentEnergy() >= card.getCost()
-                && !targetLoc.isFull(turnManager.getCurrentPlayerIndex())) {
+                && !targetLoc.isFull(this.turnManager.getCurrentPlayerIndex())) {
             currentPlayer.playCard(card);
-            targetLoc.addCard(turnManager.getCurrentPlayerIndex(), card);
+            targetLoc.addCard(this.turnManager.getCurrentPlayerIndex(), card);
             card.setRevealed(false);
 
-            System.out.println("[DEBUG] Giocata RIUSCITA. Energia residua: " + currentPlayer.getCurrentEnergy());
             notifyObserver();
             return true;
         }
-        System.out.println("[DEBUG] Giocata FALLITA. Energia: " + currentPlayer.getCurrentEnergy() + " Costo: " + card.getCost());
+       
         return false;
     }
 
@@ -98,38 +97,36 @@ public class Game {
      * If only one player finished his turn, it switches to the other player.
      */
     public void endTurn() {
-
         this.turnManager.registerMove(this.turnManager.getCurrentPlayerIndex());
         /* Both players finished the turn */
         if (this.turnManager.isTurnCycleComplete()) {
-            System.out.println("[DEBUG] Fine Ciclo. Risoluzione turno.");
             this.waitingForSwap = false;
 
             this.revealPhase();
 
-            this.turnManager.nextTurn();
-
-            for (final Player player : this.players) {
-                player.drawCard();
-                player.resetEnergy(this.turnManager.getEnergyForTurn()); /* Reset Energy for next turn */
-            }
-
-            if(this.turnManager.getCurrentTurn() == 2) {
-                this.locations.get(1).revealLocation(this);
-            } else if(this.turnManager.getCurrentTurn() == 3) {
-                this.locations.get(2).revealLocation(this);
-            }
-
-            /* Check endgame */
-            if (this.turnManager.getCurrentTurn() > this.turnManager.getMaxTurns()) {
-                Player winner = this.checkWinCondition();
-                for (GameObserver obs : this.observers) {
+            /*Check endGame before going to nextTurn */
+            if(this.turnManager.getCurrentTurn() >= this.turnManager.getMaxTurns()) {
+                final Player winner = this.checkWinCondition();
+                for(final GameObserver obs : this.observers) {
                     obs.onGameOver(winner != null ? winner.getName() : "Pareggio");
                 }
                 return;
+            } else {
+                this.turnManager.nextTurn();
+                
+                for(final Player player : this.players) {
+                    player.drawCard();
+                    player.resetEnergy(this.turnManager.getEnergyForTurn()); /*Reset energy for the next turn */
+                }
+
+                /*Second and third location revelation */
+                if(this.turnManager.getCurrentTurn() == 2) {
+                    this.locations.get(1).revealLocation(this);
+                } else if(this.turnManager.getCurrentTurn() == 3) {
+                    this.locations.get(2).revealLocation(this);
+                }
             }
         } else {
-            System.out.println("[DEBUG] Fine turno parziale. Attivazione Swap.");
             this.waitingForSwap = true;
             this.turnManager.switchPlayer();
         }
@@ -176,7 +173,7 @@ public class Game {
      * 
      * @param obs Observer to add.
      */
-    public void addObserver(GameObserver obs) {
+    public void addObserver(final GameObserver obs) {
         this.observers.add(obs);
     }
 
@@ -184,7 +181,7 @@ public class Game {
      * Notifies all the observers.
      */
     private void notifyObserver() {
-        for (GameObserver obs : observers) {
+        for(final GameObserver obs : observers) {
             obs.onGameUpdated();
         }
     }
@@ -231,15 +228,26 @@ public class Game {
      * @param index the index of the player to get.
      * @return the player at @param index.
      */
-    public Player getPlayer(int index) {
+    public Player getPlayer(final int index) {
         return this.players[index];
     }
 
+    /**
+     * Checks if the game is waiting for players to switch. 
+     * It is used to show the intermission screen.
+     * 
+     * @return true if players are switching, false otherwise.
+     */
     public boolean isWaitingForSwap() {
-        return waitingForSwap;
+        return this.waitingForSwap;
     }
 
-    public void setWaitingForSwap(boolean val) {
+    /**
+     * Sets the swap state of the game.
+     * 
+     * @param val the new state.
+     */
+    public void setWaitingForSwap(final boolean val) {
         this.waitingForSwap = val;
     }
 }

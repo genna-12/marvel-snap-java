@@ -36,12 +36,12 @@ public class TurnManager {
      * It resets player index to 0.
      */
     public void nextTurn() {
-        if (this.currentTurn <= this.maxTurns)
+        if (this.currentTurn <= this.maxTurns) {
             currentTurn++;
+        }
         this.p1Played = false;
         this.p2Played = false;
         this.currentPlayerIndex = 0;
-        System.out.println("[DEBUG] NextTurn: Inizia turno " + currentTurn);
     }
 
     /**
@@ -51,7 +51,6 @@ public class TurnManager {
      */
     public void switchPlayer() {
         this.currentPlayerIndex = (this.currentPlayerIndex == 0) ? 1 : 0;
-        System.out.println("[DEBUG] SwitchPlayer: Ora tocca a P" + (this.currentPlayerIndex + 1));
     }
 
     /**
@@ -96,22 +95,28 @@ public class TurnManager {
      * @return if cycle is complete, e.g. both players finished the turn.
      */
     public boolean isTurnCycleComplete() {
-        return p1Played && p2Played;
+        return this.p1Played && this.p2Played;
     }
 
     /**
      * Sets the maximum number of turns.
+     * 
      * @param maxTurns  maximum number of turns.
      */
-    public void setMaxTurns(int maxTurns) {
+    public void setMaxTurns(final int maxTurns) {
         this.maxTurns = maxTurns;
     }
 
-    public void registerMove(int playerIdx) {
-        if (playerIdx == 0)
-            p1Played = true;
-        else
-            p2Played = true;
-        System.out.println("[DEBUG] RegisterMove: P" + (playerIdx+1) + " ha finito. Stati: P1=" + p1Played + ", P2=" + p2Played);
+    /**
+     * Register if a player made a move.
+     * 
+     * @param playerIdx the player who made a move.
+     */
+    public void registerMove(final int playerIdx) {
+        if (playerIdx == 0) {
+            this.p1Played = true;
+        } else {
+            this.p2Played = true;
+        }
     }
 }
