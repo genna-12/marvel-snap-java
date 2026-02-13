@@ -24,7 +24,10 @@ public class LocationPanel extends JPanel {
     private List<JPanel> p1Cells;
     private List<JPanel> p2Cells;
     
-
+    /**
+     * The class constructor. 
+     * @param locIndex the index of this location.
+     */
     public LocationPanel(int locIndex) {
         this.locationIndex = locIndex;
         this.setLayout(new GridLayout(3, 1));
@@ -81,12 +84,25 @@ public class LocationPanel extends JPanel {
         propagateMouseListener();
     }
 
+    /**
+     * Sets the location field.
+     * 
+     * @param loc the chosen location.
+     */
     public void setLocation(Location loc) {
         this.location = loc;
-        if (this.location != null)
+        if (this.location != null) {
             this.infoLabel.setText(loc.getName());
+        }
     }
 
+    /**
+     * Updates the labels and the panels with new game informations. Informations are shown differently
+     * according to the player whose currently playing, in order to hide cards that are yet to reveal
+     * to the opposing player. 
+     * 
+     * @param viewerIdx the index of the current player.
+     */
     public void refresh(int viewerIdx) {
         if (this.location == null) {
             return;
@@ -129,6 +145,11 @@ public class LocationPanel extends JPanel {
         }
     }
 
+    /**
+     * Sets the controller field.
+     * 
+     * @param controller the chosen controller.
+     */
     public void setController(GameController controller) {
         this.controller = controller;
     }
@@ -150,8 +171,7 @@ public class LocationPanel extends JPanel {
     // reset di location panel serviva sempre al mio GamePanel P2
     public void reset() {
         infoLabel.setText("Location");
-        
-        p1CardsArea.removeAll();
+
         p2CardsArea.removeAll();
         
         revalidate();

@@ -14,6 +14,7 @@ import com.marvelsnap.model.NormalLocation;
 import com.marvelsnap.model.ReducedCostLocation;
 import java.util.*;
 import com.marvelsnap.model.BasicCard;
+import com.marvelsnap.util.LocationFactory;
 
 /**
  * Class for main tests.
@@ -165,7 +166,7 @@ public class ModelClassesTests {
         assertEquals(0, normalLocation.calculatePower(0));
         assertFalse(normalLocation.isFull(0));
 
-        normalLocation.addCard(0, new BasicCard(1, "TestCard", 1, 0, "TestDescription", "Nessuna"));
+        normalLocation.addCard(0, new BasicCard(1, "Test", 1, 0, "Descrizione", "Nessuna"));
         assertEquals(1, normalLocation.getCards(0).size());
 
         normalLocation.revealLocation(this.game);
@@ -174,16 +175,16 @@ public class ModelClassesTests {
         assertEquals("Descrizione", normalLocation.getDescription());
         assertEquals(10, normalLocation.getCards(0).getFirst().getPower());
         for (int i = 0; i < 3; i++) {
-            normalLocation.addCard(0, new BasicCard(1, "TestCard", 1, 0, "TestDescription", "Nessuna"));
+            normalLocation.addCard(0, new BasicCard(1, "Test", 1, 0, "Descrizione", "Nessuna"));
         }
         assertTrue(normalLocation.isFull(0));
     }
     
     @Test
     void testReducedCostLocationProperties() {
-        Location reducedCostLocation = new ReducedCostLocation("Name", "Description", 1, List.of(1));
-        this.game.getPlayer1().getHand().add(new BasicCard(2, "TestCard", 1, 0, "TestDescription", "Nessuna"));
-        this.game.getPlayer1().getHand().add(new BasicCard(3, "TestCard", 6, 0, "TestDescription", "Nessuna"));
+        Location reducedCostLocation = new ReducedCostLocation("Nome", "Descrizione", 1, List.of(1));
+        this.game.getPlayer1().getHand().add(new BasicCard(2, "Test", 1, 0, "Descrizione", "Nessuna"));
+        this.game.getPlayer1().getHand().add(new BasicCard(3, "Test", 6, 0, "Descrizione", "Nessuna"));
 
         reducedCostLocation.revealLocation(this.game);
 
@@ -194,9 +195,21 @@ public class ModelClassesTests {
     }
 
     @Test
+    void testLocationPolymorphism () {
+        Location testNormalLocation = new NormalLocation("Nome", "Descrizione", 0, List.of(0));
+        assertTrue(testNormalLocation instanceof Location);
+        Location testReducedLocation = new ReducedCostLocation("Nome", "Descrizione", 0, List.of(0));
+        assertTrue(testReducedLocation instanceof Location);
+    }
+
+    @Test
     void testLocationFactory() {
-        List<Location> locations = new ArrayList<>();
-        
+        LocationFactory locationFactory = new LocationFactory();
+        List<Location> locations = new ArrayList<>(locationFactory.createLocations());
+        assertEquals(3, locations.size());
+        assertNotEquals(locations.get(0), locations.get(1));
+        assertNotEquals(locations.get(0), locations.get(2));
+        assertNotEquals(locations.get(1), locations.get(2));
     }
 }
 

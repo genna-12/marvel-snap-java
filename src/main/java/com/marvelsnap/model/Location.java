@@ -83,12 +83,16 @@ public abstract class Location {
         int power = 0;
         if (pIdx == 0) {
             for (Card c : this.cardsPlayer1) {
-                power += c.getPower();
+                if (c.isRevealed()) {
+                    power += c.getPower();
+                }
             }
         }
         if (pIdx == 1) {
             for (Card c : this.cardsPlayer2) {
-                power += c.getPower();
+                if (c.isRevealed()) {
+                    power += c.getPower();
+                }
             }
         }
         return power;
@@ -118,6 +122,12 @@ public abstract class Location {
         return this.name;
     }
 
+    /**
+     * Gets the Location's effect description.
+     * 
+     * @return the location's effect description if the location has already been revealed,
+     * a general message otherwise.
+     */
     public String getDescription() {
         if (!isRevealed()) {
             return "Questa location non è stata ancora rivelata";
@@ -125,6 +135,12 @@ public abstract class Location {
         return this.description;
     }
 
+    /**
+     * Gets the cards that were played in the location.
+     * 
+     * @param pIdx the player index.
+     * @return the list of cards played by the chosen player.
+     */
     public List<Card> getCards(int pIdx) {
         if (pIdx == 0) {
             return this.cardsPlayer1;
@@ -133,6 +149,11 @@ public abstract class Location {
         }
     }
 
+    /**
+     * Gets the state of the Location.
+     * 
+     * @return true if the location has already been revealed, false otherwise.
+     */
     public boolean isRevealed() {
         return this.revealed;
     }
