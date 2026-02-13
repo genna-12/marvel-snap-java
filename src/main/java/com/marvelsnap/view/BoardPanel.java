@@ -27,13 +27,13 @@ public class BoardPanel extends JPanel {
         }
     }
 
-    public void refresh(List<Location> locations) {
+    public void refresh(List<Location> locations, int viewerIdx) {
         if (locations == null || locations.size() < 3) {
             return;
         }
         for (int i = 0; i < 3; i++) {
             this.locationPanels.get(i).setLocation(locations.get(i));
-            this.locationPanels.get(i).refresh();
+            this.locationPanels.get(i).refresh(viewerIdx);
 
         }
     }

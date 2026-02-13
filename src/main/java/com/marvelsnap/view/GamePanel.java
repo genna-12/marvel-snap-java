@@ -151,7 +151,7 @@ public class GamePanel extends JPanel implements GameObserver {
         if (boardPanel != null) {
             if (game.getLocations() != null) { // questa condizione non dovrebbe mai verificarsi ma serve per debug se
                                                // altri non hanno ancora finito
-                boardPanel.refresh(game.getLocations());
+                boardPanel.refresh(game.getLocations(), playerIdx);
             }
         }
         // handpanel

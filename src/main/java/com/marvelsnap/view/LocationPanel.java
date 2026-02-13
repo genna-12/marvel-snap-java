@@ -87,15 +87,18 @@ public class LocationPanel extends JPanel {
             this.infoLabel.setText(loc.getName());
     }
 
-    public void refresh() {
+    public void refresh(int viewerIdx) {
         if (this.location == null)
             return;
 
         this.p1PowerLabel.setText("P1: " + this.location.calculatePower(0));
         this.p2PowerLabel.setText("P2: " + this.location.calculatePower(1));
 
-        this.infoLabel.setText("<html>" + "<font size = '5'> <b>" +
-            this.location.getName() + "</b></font><br> " +
+        this.infoLabel.setText("<html>" +
+            "<div style = 'text-align: center;'>" + 
+            "<font size = '5'> <b>" + 
+            this.location.getName() + "</b>" +
+            "</div>" + "<br>" +
             this.location.getDescription() + "</html>");
                 
         int counter = 0;
@@ -103,10 +106,12 @@ public class LocationPanel extends JPanel {
             this.p1Cells.get(i).removeAll();
         }
         for (Card c : this.location.getCards(0)) {
-            CardPanel newCard = new CardPanel();
-            newCard.setCard(c);
-            this.p1Cells.get(counter).add(newCard);
-            counter++;
+            if (viewerIdx == 0 || c.isRevealed()) {
+                CardPanel newCard = new CardPanel();
+                newCard.setCard(c);
+                this.p1Cells.get(counter).add(newCard);
+                counter++;
+            }
         }
 
         counter = 0;
@@ -114,10 +119,12 @@ public class LocationPanel extends JPanel {
             this.p2Cells.get(i).removeAll();
         }
         for (Card c : this.location.getCards(1)) {
-            CardPanel newCard = new CardPanel();
-            newCard.setCard(c);
-            this.p2Cells.get(counter).add(newCard);
-            counter++;
+            if (viewerIdx == 1 || c.isRevealed()) {
+                CardPanel newCard = new CardPanel();
+                newCard.setCard(c);
+                this.p2Cells.get(counter).add(newCard);
+                counter++;
+            }
         }
     }
 
