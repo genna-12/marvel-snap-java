@@ -33,7 +33,7 @@ public class RulesPanel extends JPanel {
                 "quindi puoi giocare anche più di una carta per turno.\n" +
                 "3. LOCATION:\n" +
                 "Ci sono in totale 3 location, " +
-                "che vengono rivelati nei primi tre turni di gioco (uno per turno)." +
+                "che vengono rivelate nei primi tre turni di gioco (uno per turno)." +
                 "Ogni location ha un proprio effetto, ognuno dei quali può produrre interazioni differenti.\n" +
                 "4. PROGRESSIONE DEI TURNI:\n" +
                 "Ottieni +1 energia e peschi una carta ogni turno.\n" +
@@ -49,7 +49,7 @@ public class RulesPanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(rulesArea);
         add(scrollPane, BorderLayout.CENTER);
 
-        btnBack = new JButton("Ready to play! Return to menu");
+        btnBack = new JButton("Ritorna al menu");
         add(btnBack, BorderLayout.SOUTH);
     }
 
