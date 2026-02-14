@@ -11,13 +11,15 @@ import com.marvelsnap.controller.GameController;
 
 public class HandPanel extends JPanel {
 
+    private GameController controller;
+
     public HandPanel() {
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         this.setBackground(new Color(50, 50, 100));
         this.setPreferredSize(new Dimension(800, 220));
     }
 
-    public void setHand(Hand hand, GameController controller) {
+    public void setHand(Hand hand) {
         this.removeAll();
         if (hand != null && hand.getCards() != null) {
             for (Card card : hand.getCards()) {
@@ -41,5 +43,9 @@ public class HandPanel extends JPanel {
         }
         this.revalidate();
         this.repaint();
+    }
+
+    public void setController(GameController controller) {
+        this.controller = controller;
     }
 }

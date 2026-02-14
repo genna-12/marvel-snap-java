@@ -150,9 +150,6 @@ public class LocationPanel extends JPanel {
     public void reset() {
         infoLabel.setText("Location");
         
-        p1CardsArea.removeAll();
-        p2CardsArea.removeAll();
-        
         revalidate();
         repaint();
     }

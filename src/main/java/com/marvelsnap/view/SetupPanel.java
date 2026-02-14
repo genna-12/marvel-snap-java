@@ -45,6 +45,7 @@ public class SetupPanel extends JPanel {
 
         gbc.gridx = 1;
         txtP1Name = new JTextField(20);
+        txtP1Name.setName("p1NameField"); // per i test
         add(txtP1Name, gbc);
 
         gbc.gridx = 0;
@@ -69,6 +70,7 @@ public class SetupPanel extends JPanel {
 
         gbc.gridx = 1;
         txtP2Name = new JTextField(20);
+        txtP2Name.setName("p2NameField"); // per i test
         add(txtP2Name, gbc);
 
         gbc.gridx = 0;

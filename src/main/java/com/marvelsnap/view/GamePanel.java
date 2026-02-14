@@ -78,6 +78,9 @@ public class GamePanel extends JPanel implements GameObserver {
         if (boardPanel != null) {
             boardPanel.setController(controller);
         }
+        if (handPanel != null) {
+            handPanel.setController(controller);
+        }
     }
 
     /**
@@ -94,6 +97,7 @@ public class GamePanel extends JPanel implements GameObserver {
 
         // Sinistra
         lblTurnInfo = new JLabel("TURNO: --/" + Constants.MAX_TURNS);
+        lblTurnInfo.setName("labelTurno"); // per i test
         lblTurnInfo.setForeground(Color.WHITE);
         lblTurnInfo.setFont(new Font("Arial", Font.BOLD, 16));
 
@@ -159,7 +163,7 @@ public class GamePanel extends JPanel implements GameObserver {
             // Mostra SOLO la mano del giocatore corrente (aggiungo if per debug per evitare
             // nullpointer)
             if (currentPlayer != null && currentPlayer.getHand() != null) {
-                handPanel.setHand(currentPlayer.getHand(), this.controller);
+                handPanel.setHand(currentPlayer.getHand());
             }
         }
 
