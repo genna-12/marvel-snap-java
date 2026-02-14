@@ -180,6 +180,7 @@ public class LocationPanel extends JPanel {
      */
     public void reset() {
         infoLabel.setText("Location");
+        
         revalidate();
         repaint();
     }

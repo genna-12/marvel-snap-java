@@ -94,18 +94,15 @@ public class GameController implements GameObserver {
      */
     public void onIntermissionReadyClicked() {
         /* Changes the view for the next Player */
-        if (this.inputState == InputState.WAITING_FOR_SWAP || this.inputState == InputState.GAME_OVER) {
+        if (this.inputState == InputState.WAITING_FOR_SWAP) {
             this.view.showBoard();
             this.view.updateView(this.game);
-
-            if(this.winner != null) {
-                this.view.onGameOver(winner);;
-            } else {
-                this.inputState = InputState.IDLE;
-                this.game.setWaitingForSwap(false);
-            }
+            
+            this.inputState = InputState.IDLE;
+            this.game.setWaitingForSwap(false);
         }
     }
+    
 
     /* GameObserver implementation */
 
@@ -145,5 +142,16 @@ public class GameController implements GameObserver {
     public void onGameOver(final String winnerName) {
         this.winner = winnerName;
         this.inputState = InputState.GAME_OVER;
+
+        this.view.showBoard();
+        this.view.updateView(this.game);
+
+        this.view.onGameOver(this.winner);
+
+        /*Reset for the next game */
+        this.game.removeObserver(this);
+        this.inputState = InputState.IDLE;
+        this.winner = null;
+        this.selectedCard = null;
     }
 }

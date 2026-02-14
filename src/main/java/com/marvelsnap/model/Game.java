@@ -178,6 +178,14 @@ public class Game {
     }
 
     /**
+     * Removes an observer.
+     * @param observer the observer to remove.
+     */
+    public void removeObserver(final GameObserver observer) {
+        this.observers.remove(observer);
+    }
+
+    /**
      * Notifies all the observers.
      */
     private void notifyObserver() {

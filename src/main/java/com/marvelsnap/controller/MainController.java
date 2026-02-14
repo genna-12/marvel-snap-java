@@ -91,6 +91,9 @@ public class MainController {
      */
     public void onSetupConfirmed(String p1Name, DeckType d1, String p2Name, DeckType d2) {
         System.out.println("Avvio partita tra: " + p1Name + " e " + p2Name);
+
+        mainFrame.getGamePanel().resetView();
+
         mainFrame.getGamePanel().setPlayerNames(p1Name, p2Name);
 
         try {
@@ -101,13 +104,19 @@ public class MainController {
             GameController gc = new GameController(game, mainFrame.getGamePanel());
             mainFrame.getGamePanel().setController(gc);
 
+            //this.game.addObserver(mainFrame.getGamePanel());
+
             mainFrame.getGamePanel().updateView(game);
 
         } catch (Exception e) {
-            System.err.println("WARN: Il Backend (Model) non è ancora pronto. Mostro solo la UI vuota.");
+            System.err.println("errore prolly è il model");
             e.printStackTrace();
         }
 
         mainFrame.showScreen("GAME");
+    }
+
+    public MainFrame getMainFrame() {
+        return mainFrame;
     }
 }
