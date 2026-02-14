@@ -2,6 +2,7 @@ package com.marvelsnap.model;
 
 import java.util.List;
 import com.marvelsnap.util.Constants;
+
 /**
  * Represents a player in the game.
  * Manages the player's name, energy, score, deck, and hand of cards.
@@ -26,15 +27,9 @@ public class Player {
         this.hand = new Hand();
     }
 
-<<<<<<< Updated upstream
-    // costruttore vuoto per test
-    public Player() {}
-
-=======
     /**
      * Draws a card from the deck and adds it to the player's hand.
      */
->>>>>>> Stashed changes
     public void drawCard(){
         if(hand.getCards().size() < Constants.MAX_HAND_SIZE){
             Card drawn = deck.draw();
@@ -45,22 +40,17 @@ public class Player {
     }
 
     /**
-     * Plays a card from the player's hand by removung it from the hand
+     * Plays a card from the player's hand by removing it from the hand
      * and updates the energy still available.
      * 
      * @param c the card to be played.
      */
     public void playCard(Card c){
-<<<<<<< Updated upstream
-        hand.remove(c);
-=======
         if (hand.getCards().contains(c)) {
             hand.remove(c);
             this.currentEnergy = this.currentEnergy - c.getCost();
-            //debug
             System.out.println("[PLAYER] " + name + " gioca " + c.getName() + ". Energia residua: " + currentEnergy);
         }
->>>>>>> Stashed changes
     }
 
     /**
