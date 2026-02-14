@@ -49,6 +49,9 @@ public class CardPanel extends JPanel {
         nameLbl.setForeground(Color.BLACK);
         this.add(nameLbl, BorderLayout.CENTER);
 
+        this.isSelected = c.isSelected();
+        toggleSelection();
+        
         this.setToolTipText("<html><b>" + c.getName() + "</b><br>Descrizione: " + c.getDescription() + "</b><br>Effetto: " + c.getAbility() + "</html>");
     }
 
@@ -65,7 +68,6 @@ public class CardPanel extends JPanel {
     }
 
     public void toggleSelection() {
-        isSelected = !isSelected;
         if (isSelected) {
             this.setBorder(BORDER_SELECTED);
             this.setBackground(BG_SELECTED);
