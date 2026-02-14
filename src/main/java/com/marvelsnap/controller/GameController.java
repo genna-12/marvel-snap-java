@@ -40,7 +40,7 @@ public class GameController implements GameObserver {
      * @param card the card selected.
      */
     public void onCardClicked(final Card card) {
-        if (this.inputState == InputState.WAITING_FOR_SWAP) {
+        if (this.inputState == InputState.WAITING_FOR_SWAP || this.inputState == InputState.GAME_OVER) {
             return;
         }
 
@@ -48,13 +48,19 @@ public class GameController implements GameObserver {
         if (this.inputState == InputState.IDLE || this.inputState == InputState.CARD_SELECTED) {
             if (this.selectedCard != null && this.selectedCard.equals(card)) {
                 /*Deselect */
+                this.selectedCard.setSelected(false);
                 this.selectedCard = null;
                 this.inputState = InputState.IDLE;
             } else {
                 /*Select */
+                if(this.selectedCard != null) {
+                    this.selectedCard.setSelected(false);
+                }
                 this.selectedCard = card;
+                this.selectedCard.setSelected(true);
                 this.inputState = InputState.CARD_SELECTED;
             }
+            this.view.updateView(this.game);
         }
     }
 
@@ -71,9 +77,11 @@ public class GameController implements GameObserver {
 
             /* After the card is played, reset the selection */
             if (success) {
+                this.selectedCard.setSelected(false);
                 this.selectedCard = null;
                 this.inputState = InputState.IDLE;
             }
+            this.view.updateView(this.game);
         }
     }
 

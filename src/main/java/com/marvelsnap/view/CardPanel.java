@@ -67,6 +67,9 @@ public class CardPanel extends JPanel {
         nameLbl.setForeground(Color.BLACK);
         this.add(nameLbl, BorderLayout.CENTER);
 
+        this.isSelected = c.isSelected();
+        toggleSelection();
+        
         this.setToolTipText("<html><b>" + c.getName() + "</b><br>Descrizione: " + c.getDescription() + "</b><br>Effetto: " + c.getAbility() + "</html>");
     }
 
@@ -92,8 +95,6 @@ public class CardPanel extends JPanel {
      * Toggles the selection state of the card and updates its visual borders and colors.
      */
     public void toggleSelection() {
-        System.out.println("toggled selection");
-        isSelected = !isSelected;
         if (isSelected) {
             this.setBackground(BG_SELECTED);
             this.setBorder(BORDER_SELECTED);

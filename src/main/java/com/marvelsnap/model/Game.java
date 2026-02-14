@@ -107,7 +107,8 @@ public class Game {
             /*Check endGame before going to nextTurn */
             if(this.turnManager.getCurrentTurn() >= this.turnManager.getMaxTurns()) {
                 final Player winner = this.checkWinCondition();
-                for(final GameObserver obs : this.observers) {
+                List<GameObserver> obsListCopy = new ArrayList<>(this.observers); /*Solves ConcurrentModificationException */
+                for(final GameObserver obs : obsListCopy) {
                     obs.onGameOver(winner != null ? winner.getName() : "Pareggio");
                 }
                 return;
@@ -189,7 +190,7 @@ public class Game {
      * Notifies all the observers.
      */
     private void notifyObserver() {
-        for(final GameObserver obs : observers) {
+        for(final GameObserver obs : new ArrayList<>(this.observers)) {
             obs.onGameUpdated();
         }
     }

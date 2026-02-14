@@ -13,6 +13,7 @@ public abstract class Card {
     protected String description;
     protected String ability;
     protected boolean revealed = false;
+    protected boolean selected = false;
 
     /**
      * Constructor for the Card class.
@@ -92,6 +93,22 @@ public abstract class Card {
     /** @param revealed the new revealed state to set */
     public void setRevealed(boolean revealed) {
         this.revealed = revealed;
+    }
+
+    /**
+     * Checks if a card is selected.
+     * @return true if the card is selected, false otherwise.
+     */
+    public boolean isSelected() {
+        return this.selected;
+    }
+
+    /**
+     * Sets the selected state of the card.
+     * @param selected the new state to set.
+     */
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     /** @param cost the new energy cost to set */
