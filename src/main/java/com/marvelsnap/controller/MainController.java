@@ -73,7 +73,6 @@ public class MainController {
 
         // Return to main menu after the game ends
         mainFrame.getGamePanel().setBackToMenuAction(() -> {
-            System.out.println("Torno al Menu Principale...");
             mainFrame.getGamePanel().resetView();
 
             this.game = null;
@@ -99,7 +98,6 @@ public class MainController {
      * @param d2     Deck type for the second player
      */
     public void onSetupConfirmed(String p1Name, DeckType d1, String p2Name, DeckType d2) {
-        System.out.println("Avvio partita tra: " + p1Name + " e " + p2Name);
 
         mainFrame.getGamePanel().resetView();
 
@@ -118,7 +116,6 @@ public class MainController {
             mainFrame.getGamePanel().updateView(game);
 
         } catch (Exception e) {
-            System.err.println("errore prolly è il model");
             e.printStackTrace();
         }
 

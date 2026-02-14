@@ -51,7 +51,6 @@ public class Player {
         if (hand.getCards().contains(c)) {
             hand.remove(c);
             this.currentEnergy = this.currentEnergy - c.getCost();
-            System.out.println("[PLAYER] " + name + " gioca " + c.getName() + ". Energia residua: " + currentEnergy);
         }
     }
 

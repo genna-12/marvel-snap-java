@@ -13,9 +13,8 @@ public class BoardPanel extends JPanel {
     private List<LocationPanel> locationPanels;
 
     public BoardPanel() {
-        // finche non implementate la classe scrivo il seguente codice di debug
         setLayout(new GridLayout(1, 3, 10, 0));
-        setBackground(new Color(30, 30, 30)); // Colore di sfondo scuro è piu smooth
+        setBackground(new Color(30, 30, 30)); 
 
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -48,7 +47,7 @@ public class BoardPanel extends JPanel {
         }
     }
 
-    // resetta la board serviva per il mio GamePanel P2
+    /*Resets the board */
     public void reset() {
         for (LocationPanel lp : locationPanels) {
             lp.reset();

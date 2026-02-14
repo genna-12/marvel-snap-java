@@ -33,7 +33,7 @@ public class TurnManager {
 
     /**
      * Goes to the nextTurn.
-     * It resets player index to 0.
+     * It resets player index to 0 and sets at false the flags p1Played and p2Played.
      */
     public void nextTurn() {
         if (this.currentTurn <= this.maxTurns) {

@@ -18,13 +18,15 @@ public class SetupPanel extends JPanel {
     private JComboBox<DeckType> cmbDeckP2;
     private JButton btnPlay;
 
-    /** Constructs the setup panel with all necessary input fields and buttons. */
+    /** 
+     * Constructs the setup panel with all necessary input fields and buttons. 
+     */
     public SetupPanel() {
-        // qui uso GridBag perché devo allineare tutto senza fare 200 panel
+        /*GridBag used to aline everything easily*/
         setLayout(new GridBagLayout());
         setBackground(new Color(30, 30, 60));
 
-        // uso constraints per posizionare gli elementi
+        /*Constraints used to place the elements */
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -38,14 +40,14 @@ public class SetupPanel extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         add(title, gbc);
 
-        // primo giocatore
+        /*First player*/
         gbc.gridwidth = 1;
         gbc.gridy = 1;
         add(createLabel("Nome Giocatore 1:"), gbc);
 
         gbc.gridx = 1;
         txtP1Name = new JTextField(20);
-        txtP1Name.setName("p1NameField"); // per i test
+        txtP1Name.setName("p1NameField"); /*For tests*/
         add(txtP1Name, gbc);
 
         gbc.gridx = 0;
@@ -56,21 +58,21 @@ public class SetupPanel extends JPanel {
         cmbDeckP1 = new JComboBox<>(DeckType.values());
         add(cmbDeckP1, gbc);
 
-        // separatore
+        /*Separator*/
         JSeparator sep = new JSeparator();
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
         add(sep, gbc);
 
-        // secondo giocatore analogo al primo
+        /*Second player*/
         gbc.gridwidth = 1;
         gbc.gridy = 4;
         add(createLabel("Nome Giocatore 2:"), gbc);
 
         gbc.gridx = 1;
         txtP2Name = new JTextField(20);
-        txtP2Name.setName("p2NameField"); // per i test
+        txtP2Name.setName("p2NameField"); /*For tests*/
         add(txtP2Name, gbc);
 
         gbc.gridx = 0;
@@ -79,17 +81,17 @@ public class SetupPanel extends JPanel {
 
         gbc.gridx = 1;
         cmbDeckP2 = new JComboBox<>(DeckType.values());
-        cmbDeckP2.setSelectedItem(DeckType.VILLAINS); // Default diverso
+        cmbDeckP2.setSelectedItem(DeckType.VILLAINS); /*Different default*/
         add(cmbDeckP2, gbc);
 
-        // starta partita
+        /*Start game*/
         gbc.gridx = 0;
         gbc.gridy = 6;
         gbc.gridwidth = 2;
         gbc.insets = new Insets(30, 10, 10, 10);
 
         btnPlay = new JButton("INIZIA BATTAGLIA");
-        btnPlay.setBackground(new Color(0, 150, 0)); // Verde
+        btnPlay.setBackground(new Color(0, 150, 0)); /*Green*/
         btnPlay.setForeground(Color.WHITE);
         btnPlay.setFont(new Font("Arial", Font.BOLD, 20));
         btnPlay.setPreferredSize(new Dimension(200, 50));
@@ -115,32 +117,44 @@ public class SetupPanel extends JPanel {
         btnPlay.addActionListener(action);
     }
 
-    /** @return the text entered for Player 1's name */
+    /** 
+     * @return the text entered for Player 1's name 
+     */
     public String getP1Name() {
         return txtP1Name.getText();
     }
 
-    /** @return the selected DeckType for Player 1 */
+    /** 
+     * @return the selected DeckType for Player 1 
+     */
     public DeckType getP1DeckType() {
         return (DeckType) cmbDeckP1.getSelectedItem();
     }
 
-    /** @return the text entered for Player 2's name */
+    /** 
+     * @return the text entered for Player 2's name
+     */
     public String getP2Name() {
         return txtP2Name.getText();
     }
 
-    /** @return the selected DeckType for Player 2 */
+    /** 
+     * @return the selected DeckType for Player 2 
+     */
     public DeckType getP2DeckType() {
         return (DeckType) cmbDeckP2.getSelectedItem();
     }
 
-    /** @param name the name to set for Player 1 */
+    /** 
+     * @param name the name to set for Player 1 
+     */
     public void setP1Name(String name) {
         this.txtP1Name.setText(name);
     }
 
-    /** @param name the name to set for Player 2 */
+    /** 
+     * @param name the name to set for Player 2 
+     */
     public void setP2Name(String name) {
         this.txtP2Name.setText(name);
     }
