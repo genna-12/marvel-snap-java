@@ -13,6 +13,7 @@ public class MainFrame extends JFrame {
     private MenuPanel menuPanel;
     private GamePanel gamePanel;
     private SetupPanel setupPanel;
+    private RulesPanel rulesPanel;
 
     /**
      * Constructs the main frame, sets up the window properties,
@@ -30,10 +31,12 @@ public class MainFrame extends JFrame {
         menuPanel = new MenuPanel();
         setupPanel = new SetupPanel();
         gamePanel = new GamePanel();
+        rulesPanel = new RulesPanel();
 
         mainContainer.add(menuPanel, "MENU");
         mainContainer.add(setupPanel, "SETUP");
         mainContainer.add(gamePanel, "GAME");
+        mainContainer.add(rulesPanel, "RULES");
 
         add(mainContainer);
     }
@@ -74,4 +77,13 @@ public class MainFrame extends JFrame {
     public GamePanel getGamePanel() {
         return gamePanel;
     }
+
+    /**
+     * Provides access to the rules panel for setting up the game controller.
+     * 
+     * @return the rules panel instance
+     */
+    public RulesPanel getRulesPanel() {
+    return rulesPanel;
+}
 }

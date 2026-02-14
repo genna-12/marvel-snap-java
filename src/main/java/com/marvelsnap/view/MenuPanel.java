@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 public class MenuPanel extends JPanel {
     private JButton btnStart;
     private JButton btnExit;
+    private JButton btnRules;
 
     /**
      * Constructs the menu panel with a centered layout.
@@ -22,12 +23,16 @@ public class MenuPanel extends JPanel {
 
         btnStart = new JButton("Nuova partita");
         btnExit = new JButton("Esci");
+        btnRules = new JButton("Regole");
 
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(btnStart, gbc);
 
         gbc.gridy = 1;
+        add(btnRules, gbc);
+
+        gbc.gridy = 2;
         add(btnExit, gbc);
     }
 
@@ -47,5 +52,14 @@ public class MenuPanel extends JPanel {
      */
     public void setExitAction(ActionListener action) {
         btnExit.addActionListener(action);
+    }
+
+    /**
+     * Assigns an action to the Rules button.
+     * 
+     * @param action the listener to trigger when clicked
+     */
+    public void setRulesAction(ActionListener action) {
+        btnRules.addActionListener(action);
     }
 }

@@ -38,6 +38,15 @@ public class MainController {
             System.exit(0);
         });
 
+        // Rules Panel
+        mainFrame.getMenuPanel().setRulesAction((ActionEvent e) -> {
+            mainFrame.showScreen("RULES");
+        });
+
+        mainFrame.getRulesPanel().setBackAction((ActionEvent e) -> {
+            mainFrame.showScreen("MENU");
+        });
+
         // Setup Panel
         mainFrame.getSetupPanel().setPlayAction((ActionEvent e) -> {
             String p1Name = mainFrame.getSetupPanel().getP1Name();
