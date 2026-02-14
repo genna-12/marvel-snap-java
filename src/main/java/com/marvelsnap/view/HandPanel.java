@@ -32,7 +32,6 @@ public class HandPanel extends JPanel {
                         if (controller != null) {
                             System.out.println("Click rilevato su carta: " + card.getName());
                             controller.onCardClicked(card);
-                            cp.toggleSelection();
                         } else {
                             System.out.println("Controller non settato in HandPanel");
                         }
