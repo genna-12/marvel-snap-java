@@ -19,7 +19,7 @@ public class IntermissionPanel extends JPanel {
      */
     public IntermissionPanel() {
         setLayout(new GridBagLayout());
-        setBackground(new Color(20, 20, 20)); // Quasi nero
+        setBackground(new Color(20, 20, 20)); /*Almost black*/
         this.setOpaque(true);
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -32,21 +32,21 @@ public class IntermissionPanel extends JPanel {
         stopIcon.setForeground(Color.RED);
         add(stopIcon, gbc);
 
-        // info label
+        /*InfoLabel*/
         gbc.gridy = 1;
         infoLabel = new JLabel("In attesa del giocatore...");
         infoLabel.setFont(new Font("Arial", Font.BOLD, 24));
         infoLabel.setForeground(Color.WHITE);
         add(infoLabel, gbc);
 
-        // sottotitolo
+        /*Subtitle*/
         gbc.gridy = 2;
         JLabel subMsg = new JLabel("Non guardare lo schermo se non è il tuo turno!");
         subMsg.setFont(new Font("Arial", Font.ITALIC, 16));
         subMsg.setForeground(Color.LIGHT_GRAY);
         add(subMsg, gbc);
 
-        // bottone sono pronto
+        /* "I am ready" button */
         gbc.gridy = 3;
         btnReady = new JButton("SONO PRONTO");
         btnReady.setFont(new Font("Arial", Font.BOLD, 20));

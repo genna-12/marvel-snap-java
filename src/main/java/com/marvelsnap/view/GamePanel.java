@@ -55,9 +55,9 @@ public class GamePanel extends JPanel implements GameObserver {
 
         cardLayout.show(this, "Board");
 
-        // fine turno
+        /*End turn*/
         JButton btnEndTurn = new JButton("TERMINA TURNO");
-        btnEndTurn.setBackground(new Color(200, 50, 50)); // Rosso scuro
+        btnEndTurn.setBackground(new Color(200, 50, 50)); /*Dark red*/
         btnEndTurn.setForeground(Color.WHITE);
         btnEndTurn.setFont(new Font("Arial", Font.BOLD, 14));
         btnEndTurn.setFocusPainted(false);
@@ -95,19 +95,19 @@ public class GamePanel extends JPanel implements GameObserver {
         Border spazioInterno = BorderFactory.createEmptyBorder(10, 20, 10, 20);
         infoPanel.setBorder(BorderFactory.createCompoundBorder(lineaGrigia, spazioInterno));
 
-        // Sinistra
+        /*Left*/
         lblTurnInfo = new JLabel("TURNO: --/" + Constants.MAX_TURNS);
-        lblTurnInfo.setName("labelTurno"); // per i test
+        lblTurnInfo.setName("labelTurno"); /*For tests*/
         lblTurnInfo.setForeground(Color.WHITE);
         lblTurnInfo.setFont(new Font("Arial", Font.BOLD, 16));
 
-        // Centro
+        /*Center*/
         lblPlayerName = new JLabel("Caricamento...");
         lblPlayerName.setForeground(Color.ORANGE);
         lblPlayerName.setFont(new Font("Arial", Font.BOLD, 18));
         lblPlayerName.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Destra
+        /*Right*/
         lblEnergyInfo = new JLabel("ENERGIA: --");
         lblEnergyInfo.setForeground(Color.CYAN);
         lblEnergyInfo.setFont(new Font("Arial", Font.BOLD, 16));
@@ -142,26 +142,21 @@ public class GamePanel extends JPanel implements GameObserver {
         int playerIdx = game.getTurnManager().getCurrentPlayerIndex();
         Player currentPlayer = game.getPlayer(playerIdx);
         String name = (playerIdx == 0) ? p1Name : p2Name;
-        // non passo currentPlayer.getCurrentEnergy() per evitare null pointer exception
-        // se p3 è indietro
         int energy = (currentPlayer != null) ? currentPlayer.getCurrentEnergy() : 0;
 
-        // aggiorno
-        // infopanel
-        lblTurnInfo.setText("TURNO " + turn + "/" + game.getTurnManager().getMaxTurns()); // in caso esca la location Limbo
+        /*Update infoPanel */
+        lblTurnInfo.setText("TURNO " + turn + "/" + game.getTurnManager().getMaxTurns()); /*In case of Limbo location*/
         lblPlayerName.setText(name.toUpperCase());
         lblEnergyInfo.setText("ENERGIA: " + energy);
-        // boardpanel
+        /*BoardPanel*/
         if (boardPanel != null) {
-            if (game.getLocations() != null) { // questa condizione non dovrebbe mai verificarsi ma serve per debug se
-                                               // altri non hanno ancora finito
+            if (game.getLocations() != null) {
                 boardPanel.refresh(game.getLocations(), playerIdx);
             }
         }
-        // handpanel
+        /*HandPanel*/
         if (handPanel != null) {
-            // Mostra SOLO la mano del giocatore corrente (aggiungo if per debug per evitare
-            // nullpointer)
+            /*Shows only current player's hand*/
             if (currentPlayer != null && currentPlayer.getHand() != null) {
                 handPanel.setHand(currentPlayer.getHand());
             }
@@ -178,12 +173,16 @@ public class GamePanel extends JPanel implements GameObserver {
         showBoard();
     }
 
-    /** Switches the view to the game board. */
+    /** 
+     * Switches the view to the game board. 
+     */
     public void showBoard() {
         cardLayout.show(this, "Board");
     }
 
-    /** Switches the view to the intermission/hidden screen. */
+    /** 
+     * Switches the view to the intermission/hidden screen. 
+     */
     public void showIntermission() {
         cardLayout.show(this, "Intermission");
     }
@@ -207,7 +206,9 @@ public class GamePanel extends JPanel implements GameObserver {
                 options[0]);
     }
 
-    /** Repaints the game. */
+    /** 
+     * Repaints the game. 
+     */
     @Override
     public void onGameUpdated() {
         repaint();
@@ -234,17 +235,19 @@ public class GamePanel extends JPanel implements GameObserver {
         int choice = showEndGame(winnerName);
 
         if (choice == 0) {
-            // torno al menu
+            /*Back to menu*/
             if (backToMenuAction != null) {
                 backToMenuAction.run();
             }
         } else {
-            // chiudo l'app
+            /*Close the app*/
             System.exit(0);
         }
     }
 
-    /** @param action the logic to execute when returning to the main menu */
+    /** 
+     * @param action the logic to execute when returning to the main menu 
+     */
     public void setBackToMenuAction(Runnable action) {
         this.backToMenuAction = action;
     }
