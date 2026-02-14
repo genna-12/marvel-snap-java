@@ -25,11 +25,13 @@ public class Player {
         this.deck = new Deck(deck);
         this.deck.shuffle();
         this.hand = new Hand();
+        this.currentEnergy = 0;
     }
 
     /**
      * Draws a card from the deck and adds it to the player's hand.
      */
+
     public void drawCard(){
         if(hand.getCards().size() < Constants.MAX_HAND_SIZE){
             Card drawn = deck.draw();
@@ -59,7 +61,7 @@ public class Player {
      * @param amount the amount of energy that the player will be able to spend.
      */
     public void resetEnergy(int amount){
-        currentEnergy = amount;
+        this.currentEnergy = amount;
     }
 
 

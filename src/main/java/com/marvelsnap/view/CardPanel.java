@@ -1,10 +1,16 @@
 package com.marvelsnap.view;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.Border;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 import com.marvelsnap.model.Card;
 
 /**
@@ -78,6 +84,7 @@ public class CardPanel extends JPanel {
             this.setBorder(BORDER_NORMAL);
         }
         this.repaint();
+
     }
 
     /**

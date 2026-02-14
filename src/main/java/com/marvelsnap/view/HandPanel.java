@@ -5,9 +5,9 @@ import javax.swing.JPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import com.marvelsnap.controller.GameController;
 import com.marvelsnap.model.Card;
 import com.marvelsnap.model.Hand;
+import com.marvelsnap.controller.GameController;
 
 /**
  * Panel that shows the player's current hand.

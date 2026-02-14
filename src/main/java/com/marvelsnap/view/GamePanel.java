@@ -11,6 +11,10 @@ import com.marvelsnap.util.Constants;
 
 import java.awt.*;
 
+/**
+ * Main game screen that displays the board, the hand, and game info.
+ * It implements GameObserver to react to model changes automatically.
+ */
 public class GamePanel extends JPanel implements GameObserver {
 
     private IntermissionPanel intermissionPanel;
@@ -25,7 +29,13 @@ public class GamePanel extends JPanel implements GameObserver {
     private JLabel lblTurnInfo;
     private JLabel lblEnergyInfo;
     private JLabel lblPlayerName;
+    private Runnable backToMenuAction;
 
+    /**
+     * Constructor for GamePanel.
+     * Initializes the sub-panels (Board, Hand, Intermission) and sets up the
+     * turn-end button logic.
+     */
     public GamePanel() {
         cardLayout = new CardLayout();
         setLayout(cardLayout);
@@ -43,25 +53,40 @@ public class GamePanel extends JPanel implements GameObserver {
         add(activeGameContainer, "Board");
         add(intermissionPanel, "Intermission");
 
-        // debug
-        JButton btnDebugTurn = new JButton("[DEBUG] Simula Fine Turno");
-        btnDebugTurn.setBackground(Color.RED);
-        btnDebugTurn.setForeground(Color.WHITE);
+        cardLayout.show(this, "Board");
 
-        btnDebugTurn.addActionListener(e -> {
-            // Simulo che il Player 1 abbia finito e tocchi al Player 2
-            onTurnChanged(1); // 1 = Indice del Player 2
+        // fine turno
+        JButton btnEndTurn = new JButton("TERMINA TURNO");
+        btnEndTurn.setBackground(new Color(200, 50, 50)); // Rosso scuro
+        btnEndTurn.setForeground(Color.WHITE);
+        btnEndTurn.setFont(new Font("Arial", Font.BOLD, 14));
+        btnEndTurn.setFocusPainted(false);
+
+        btnEndTurn.addActionListener(e -> {
+            if (controller != null) {
+                controller.onEndTurnClicked();
+            }
         });
-
-        activeGameContainer.add(btnDebugTurn, BorderLayout.WEST);
+        activeGameContainer.add(btnEndTurn, BorderLayout.EAST);
     }
 
-    // Aggiungere metodo all'UML
+    /**
+     * Connects the controller to the panel and its sub-components.
+     */
     public void setController(GameController controller) {
         this.controller = controller;
+        if (boardPanel != null) {
+            boardPanel.setController(controller);
+        }
+        if (handPanel != null) {
+            handPanel.setController(controller);
+        }
     }
 
-    // Aggiungere metodo all'UML
+    /**
+     * Creates the top information bar showing turns, current player, and energy.
+     * Styled with a dark theme to match the game aesthetics.
+     */
     private void createInfoPanel() {
         infoPanel = new JPanel(new BorderLayout());
         infoPanel.setBackground(Color.BLACK);
@@ -72,6 +97,7 @@ public class GamePanel extends JPanel implements GameObserver {
 
         // Sinistra
         lblTurnInfo = new JLabel("TURNO: --/" + Constants.MAX_TURNS);
+        lblTurnInfo.setName("labelTurno"); // per i test
         lblTurnInfo.setForeground(Color.WHITE);
         lblTurnInfo.setFont(new Font("Arial", Font.BOLD, 16));
 
@@ -91,12 +117,24 @@ public class GamePanel extends JPanel implements GameObserver {
         infoPanel.add(lblEnergyInfo, BorderLayout.EAST);
     }
 
-    // Aggiungere metodo all'UML
+    /**
+     * Sets the player names to be displayed in the info panel and intermission
+     * screen.
+     * 
+     * @param p1Name the name of player 1
+     * @param p2Name the name of player 2
+     */
     public void setPlayerNames(String p1Name, String p2Name) {
         this.p1Name = p1Name;
         this.p2Name = p2Name;
     }
 
+    /**
+     * Updates all UI components (board, hand, labels) based on the current game
+     * state.
+     * 
+     * @param game The current state of the game model.
+     */
     public void updateView(Game game) {
         if (game == null || game.getTurnManager() == null)
             return;
@@ -110,14 +148,14 @@ public class GamePanel extends JPanel implements GameObserver {
 
         // aggiorno
         // infopanel
-        lblTurnInfo.setText("TURNO " + turn + "/" + Constants.MAX_TURNS);
+        lblTurnInfo.setText("TURNO " + turn + "/" + game.getTurnManager().getMaxTurns()); // in caso esca la location Limbo
         lblPlayerName.setText(name.toUpperCase());
         lblEnergyInfo.setText("ENERGIA: " + energy);
         // boardpanel
         if (boardPanel != null) {
             if (game.getLocations() != null) { // questa condizione non dovrebbe mai verificarsi ma serve per debug se
                                                // altri non hanno ancora finito
-                boardPanel.refresh(game.getLocations());
+                boardPanel.refresh(game.getLocations(), playerIdx);
             }
         }
         // handpanel
@@ -133,27 +171,52 @@ public class GamePanel extends JPanel implements GameObserver {
         repaint();
     }
 
+    /**
+     * Callback called when the player is ready to resume after intermission.
+     */
     public void onReadyToPlay() {
         showBoard();
     }
 
+    /** Switches the view to the game board. */
     public void showBoard() {
         cardLayout.show(this, "Board");
     }
 
+    /** Switches the view to the intermission/hidden screen. */
     public void showIntermission() {
         cardLayout.show(this, "Intermission");
     }
 
-    public void showEndGame(String message) {
-        JOptionPane.showMessageDialog(this, "Il vincitore è: " + message);
+    /**
+     * Displays a dialog box when the game is over.
+     * 
+     * @param winnerName The name of the player who won.
+     * @return the option chosen by the user (Return to Menu or Exit).
+     */
+    public int showEndGame(String winnerName) {
+        Object[] options = { "Torna al Menu", "Esci" };
+        return JOptionPane.showOptionDialog(
+                this,
+                "PARTITA TERMINATA!\nVincitore: " + winnerName,
+                "Game Over",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0]);
     }
 
+    /** Repaints the game. */
     @Override
     public void onGameUpdated() {
         repaint();
     }
 
+    /**
+     * Handles the turn change by updating the intermission screen
+     * with the next player's name.
+     */
     @Override
     public void onTurnChanged(int playerIndex) {
         String nextName = (playerIndex == 0) ? p1Name : p2Name;
@@ -161,12 +224,63 @@ public class GamePanel extends JPanel implements GameObserver {
         showIntermission();
     }
 
+    /**
+     * Handles the end of the game by showing the winner dialog
+     * and managing the player's choice to restart or exit.
+     */
     @Override
     public void onGameOver(String winnerName) {
-        showEndGame("Il vincitore è: " + winnerName);
+
+        int choice = showEndGame(winnerName);
+
+        if (choice == 0) {
+            // torno al menu
+            if (backToMenuAction != null) {
+                backToMenuAction.run();
+            }
+        } else {
+            // chiudo l'app
+            System.exit(0);
+        }
     }
 
+    /** @param action the logic to execute when returning to the main menu */
+    public void setBackToMenuAction(Runnable action) {
+        this.backToMenuAction = action;
+    }
+
+    /**
+     * @return the intermission panel to allow the controller to set the next
+     *         player's name
+     */
     public IntermissionPanel getIntermissionPanel() {
         return intermissionPanel;
+    }
+
+    /**
+     * Resets the view to its initial state for a new game.
+     */
+    public void resetView() {
+        this.p1Name = "Player 1";
+        this.p2Name = "Player 2";
+
+        lblTurnInfo.setText("TURNO: --/" + Constants.MAX_TURNS);
+        lblPlayerName.setText("CARICAMENTO...");
+        lblEnergyInfo.setText("ENERGIA: --");
+
+        if (boardPanel != null) {
+            boardPanel.reset();
+        }
+
+        if (handPanel != null) {
+            handPanel.removeAll();
+            handPanel.revalidate();
+            handPanel.repaint();
+        }
+
+        showBoard();
+
+        revalidate();
+        repaint();
     }
 }
