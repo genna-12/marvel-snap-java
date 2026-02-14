@@ -1,31 +1,22 @@
 import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.marvelsnap.util.DeckType;
-import com.marvelsnap.view.CardPanel;
 import com.marvelsnap.view.GamePanel;
 import com.marvelsnap.controller.GameController;
 import com.marvelsnap.model.Card;
 import com.marvelsnap.model.Game;
-import com.marvelsnap.model.Player;
-import java.util.*;
 import com.marvelsnap.model.BasicCard;
-import com.marvelsnap.util.LocationFactory;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.timing.Condition;
 import org.assertj.swing.timing.Pause;
 import org.assertj.swing.edt.GuiActionRunner;
-import org.assertj.swing.exception.ComponentLookupException;
 
-import com.marvelsnap.controller.GameController;
-import com.marvelsnap.view.LocationPanel;
 import javax.swing.*;
-import org.assertj.swing.core.BasicComponentFinder;
-import org.assertj.swing.core.ComponentFinder;
-import org.assertj.swing.core.GenericTypeMatcher;
 
+/**
+ * Test class for BoardPanel and LocationPanel.
+ */
 public class BoardPanelTest {
 
     private Game testGame;
@@ -34,6 +25,10 @@ public class BoardPanelTest {
     private JFrame testMainFrame;
     private FrameFixture testWindow;
     
+    /**
+     * Setup method called before the actual test. It creates a simulated game condition in which player one has a test card, that is
+     * ready to be played. It also creates a FrameFixture, in order to make the test completely automatic.
+     */
     @BeforeEach
     public void setUp() {
         this.testGame = new Game();
@@ -48,7 +43,7 @@ public class BoardPanelTest {
 
                 testGamePanel = new GamePanel();
                 testController = new GameController(testGame, testGamePanel);
-                testGamePanel.getHandPanel().setHand(testGame.getPlayer1().getHand(), testController);
+                testGamePanel.getHandPanel().setHand(testGame.getPlayer1().getHand());
 
                 JFrame frame = new JFrame();
                 frame.add(testGamePanel);
@@ -59,9 +54,14 @@ public class BoardPanelTest {
 
         this.testWindow = new FrameFixture(this.testMainFrame);
         this.testWindow.show();
+        this.testWindow.maximize();
         this.testWindow.robot().waitForIdle();
     }
 
+    /**
+     * Simulates a mouse click on the test card, in order to select it, then a click on the 
+     * first location, in order to play the card. 
+     */
     @Test
     public void testLocationClick() {
         testWindow.focus();
@@ -70,10 +70,9 @@ public class BoardPanelTest {
         this.testWindow.robot().waitForIdle();
 
         testWindow.panel("locationPanel0").click();
-
         this.testWindow.robot().waitForIdle();
 
-        Pause.pause(new Condition("Verifica l'inserimento effettivo della carta nella location") {
+        Pause.pause(new Condition("Attende l'inserimento effettivo della carta nella location") {
             @Override
             public boolean test() {
                 return testGame.getLocations().getFirst().getCards(0).size() == 1;
@@ -81,17 +80,5 @@ public class BoardPanelTest {
         }, 2000);
 
         assertEquals(1,testGame.getLocations().getFirst().getCards(0).size());
-    }
-
-    
-    @Test
-    public void testCardHided() {
-    }
-
-    @AfterEach
-    public void reset() {
-        if (this.testWindow != null) {
-            this.testWindow.cleanUp();
-        }
     }
 }

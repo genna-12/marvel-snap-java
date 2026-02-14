@@ -184,13 +184,4 @@ public class LocationPanel extends JPanel {
         revalidate();
         repaint();
     }
-
-    public List<JPanel> getPlayerCells(int pIdx) {
-        if (pIdx == 0) {
-            return this.p1Cells;
-        }
-        else {
-            return this.p2Cells;
-        }
-    }
 }
