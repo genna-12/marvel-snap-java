@@ -10,6 +10,9 @@ import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.List;
 
+/**
+ * The area of the board where cards are placed by each player and where locations and their effects are shown.
+ */
 public class LocationPanel extends JPanel {
 
     private Location location;
@@ -24,9 +27,13 @@ public class LocationPanel extends JPanel {
     private List<JPanel> p1Cells;
     private List<JPanel> p2Cells;
     
-
+    /**
+     * The class constructor. 
+     * @param locIndex the index of this location.
+     */
     public LocationPanel(int locIndex) {
         this.locationIndex = locIndex;
+        this.setName("locationPanel" + locIndex);
         this.setLayout(new GridLayout(3, 1));
         this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
 
@@ -81,16 +88,30 @@ public class LocationPanel extends JPanel {
         propagateMouseListener();
     }
 
+    /**
+     * Sets the location field.
+     * 
+     * @param loc the chosen location.
+     */
     public void setLocation(Location loc) {
         this.location = loc;
-        if (this.location != null)
+        if (this.location != null) {
             this.infoLabel.setText(loc.getName());
+        }
     }
 
+    /**
+     * Updates the labels and the panels with new game informations. Informations are shown differently
+     * according to the player who is currently playing, in order to hide cards that are yet to reveal
+     * to the opposing player. 
+     * 
+     * @param viewerIdx the index of the current player.
+     */
     public void refresh(int viewerIdx) {
-        if (this.location == null)
+        if (this.location == null) {
             return;
-
+        }
+        
         this.p1PowerLabel.setText("P1: " + this.location.calculatePower(0));
         this.p2PowerLabel.setText("P2: " + this.location.calculatePower(1));
 
@@ -128,10 +149,18 @@ public class LocationPanel extends JPanel {
         }
     }
 
+    /**
+     * Sets the controller field.
+     * 
+     * @param controller the chosen controller.
+     */
     public void setController(GameController controller) {
         this.controller = controller;
     }
 
+    /**
+     * Constructs a MouseAdapter in order to involve the controller after user interaction.
+     */
     private void propagateMouseListener() {
         MouseAdapter clicker = new MouseAdapter() {
             @Override

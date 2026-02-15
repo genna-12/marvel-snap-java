@@ -143,7 +143,7 @@ public class Game {
     private void revealPhase() {
         for(final Location loc : this.locations) {
             /*Let's reveal the card played by player 1 */
-            for(final Card c : loc.getCards(0)) {
+            for(Card c : loc.getCards(0)) {
                 if(!c.isRevealed()) {
                     c.setRevealed(true);
                     c.onReveal(this, loc);

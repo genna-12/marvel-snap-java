@@ -38,6 +38,7 @@ public class HandPanel extends JPanel {
         this.removeAll();
         if (hand != null && hand.getCards() != null) {
             for (Card card : hand.getCards()) {
+                this.setName("cardPanel" + card.getId());
                 CardPanel cp = new CardPanel();
                 cp.setCard(card);
 

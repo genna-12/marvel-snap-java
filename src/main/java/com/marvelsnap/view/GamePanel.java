@@ -286,4 +286,22 @@ public class GamePanel extends JPanel implements GameObserver {
         revalidate();
         repaint();
     }
+
+    /**
+     * Gets the boardPanel field.
+     * 
+     * @return the boardPanel field.
+     */
+    public BoardPanel getBoardPanel() {
+        return this.boardPanel;
+    }
+
+    /**
+     * Gets the handPanel field.
+     * 
+     * @return the handPanel field.
+     */
+    public HandPanel getHandPanel() {
+        return this.handPanel;
+    }
 }

@@ -9,9 +9,16 @@ import com.marvelsnap.model.NormalLocation;
 import com.marvelsnap.model.ReducedCostLocation;
 import com.marvelsnap.model.Card;
 
-
+/**
+ * The creator of the three locations used in the game.
+ */
 public class LocationFactory {
 
+    /**
+     * Creates a pool of different locations and it selects randomly three of them.
+     * 
+     * @return a random list formed by three locations.
+     */
     public List<Location> createLocations() {
         List<Location> locations = new ArrayList<>();
 
