@@ -19,7 +19,7 @@ public class Main {
     public static void main(String[] args) {
         FlatDarkLaf.setup();
 
-        // usiamo invokeLater per progetto grande e sicurezza thread 
+        /*We use invokeLater because of thread security*/ 
         SwingUtilities.invokeLater(() -> {
             try{
                 MainController controller = new MainController();
