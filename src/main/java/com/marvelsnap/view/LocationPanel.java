@@ -38,7 +38,7 @@ public class LocationPanel extends JPanel {
         this.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
 
         this.p1CardsArea = new JPanel(new GridLayout(2, 2));
-        this.p1CardsArea.setBackground(new Color(40, 40, 40));
+        this.p1CardsArea.setBackground(new Color(40, 40, 40)); /*Dark grey*/
         this.p1CardsArea.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), "Player 1"));
         this.p1Cells = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -69,7 +69,7 @@ public class LocationPanel extends JPanel {
 
         this.p1PowerLabel = new JLabel("0");
         this.p1PowerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        this.p1PowerLabel.setForeground(Color.CYAN);
+        this.p1PowerLabel.setForeground(Color.CYAN); /*Cyan blue*/
         this.p1PowerLabel.setFont(new Font("Arial", Font.BOLD, 16));
 
         this.p2PowerLabel = new JLabel("0");
@@ -175,9 +175,7 @@ public class LocationPanel extends JPanel {
         this.infoArea.addMouseListener(clicker);
     }
 
-    /**
-     * Resets the panel to be ready for a new game.
-     */
+    /*LocationPanel reset*/
     public void reset() {
         infoLabel.setText("Location");
         

@@ -20,7 +20,7 @@ public class BoardPanel extends JPanel {
      */
     public BoardPanel() {
         setLayout(new GridLayout(1, 3, 10, 0));
-        setBackground(new Color(30, 30, 30));
+        setBackground(new Color(30, 30, 30)); 
 
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -69,9 +69,7 @@ public class BoardPanel extends JPanel {
         }
     }
 
-    /**
-     * Resets all the three locations to be ready for a new game.
-     */
+    /*Resets the board */
     public void reset() {
         for (LocationPanel lp : locationPanels) {
             lp.reset();

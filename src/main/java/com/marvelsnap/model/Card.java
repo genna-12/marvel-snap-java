@@ -128,7 +128,6 @@ public abstract class Card {
      */
     public void addPower(int add) {
         this.power += add;
-        System.out.println("[DEBUG MODEL] " + this.name + " forza cambiata a " + this.power);
     }
 
     /**
